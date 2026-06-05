@@ -76,6 +76,11 @@ public class BooksController : Controller
         return NotFound("Đây là response 404 demo từ action Force404.");
     }
 
+    public IActionResult CategoryInfo()
+    {
+        return Content("Danh mục hiện có: Self-Help, Novel, Romance, Chill");
+    }
+
     private static BookListViewModel ToListItemViewModel(Book book)
     {
         return new BookListViewModel
