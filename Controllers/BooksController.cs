@@ -46,10 +46,10 @@ public class BooksController : Controller
 
     public IActionResult Welcome()
     {
-        return Content("Welcome to ASP.NET Core MVC Lab02");
+        return Content("Welcome to Mini Bookstore Catalog API!");
     }
 
-    public IActionResult ProductJson()
+    public IActionResult BookJson()
     {
         var books = _bookService.GetAll()
             .Select(book => new
