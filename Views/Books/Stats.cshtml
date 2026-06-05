@@ -1,0 +1,95 @@
+@model BookStatsViewModel
+
+@{
+    ViewData["Title"] = "Inventory Stats";
+}
+
+<div class="page-header">
+    <div>
+        <h2 class="page-title">Inventory Stats</h2>
+        <p class="page-description">
+            Trang nay giup ban xem nhanh tong quan tinh hinh ton kho cua cua hang.
+        </p>
+    </div>
+
+    <a class="btn btn-light" href="/Books">
+        Quay lai danh sach
+    </a>
+</div>
+
+<div class="stat-grid">
+    <div class="stat-card">
+        <div class="stat-number">@Model.TotalBooks</div>
+        <div class="stat-label">Tong so loai san pham</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-number">@Model.TotalQuantity</div>
+        <div class="stat-label">TTong so luong ton kho</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-number">@Model.TotalInventoryValueText</div>
+        <div class="stat-label">Tong gia tri ton kho</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-number text-danger">@Model.OutOfStockCount</div>
+        <div class="stat-label">San pham da het hang</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-number text-warning">@Model.NeedReorderCount</div>
+        <div class="stat-label">San pham can nhap them</div>
+    </div>
+</div>
+
+<div class="info-panel">
+    <h4>Danh gia tinh hinh ton kho</h4>
+
+    @if (Model.OutOfStockCount > 0)
+    {
+        <p class="text-danger">
+            Co san pham da het hang. Can kiem tra va nhap hang som.
+        </p>
+    }
+    else if (Model.NeedReorderCount > 0)
+    {
+        <p class="text-warning">
+            Mot so san pham gan het hang. Nen lap ke hoach nhap them.
+        </p>
+    }
+    else
+    {
+        <p class="text-success">
+            Ton kho hien tai dang o tinh trang tot
+        </p>
+    }
+</div>
+
+<table class="table table-bordered mt-4">
+    <tr>
+        <th>Tong so loai san pham</th>
+        <td>@Model.TotalBooks</td>
+    </tr>
+
+    <tr>
+        <th>Tong so luong ton kho</th>
+        <td>@Model.TotalQuantity</td>
+    </tr>
+
+    <tr>
+        <th>Tong gia tri ton kho</th>
+        <td>@Model.TotalInventoryValueText</td>
+    </tr>
+
+    <tr>
+        <th>San pham da het hang</th>
+        <td>@Model.OutOfStockCount</td>
+    </tr>
+
+    <tr>
+        <th>San pham can nhap them</th>
+        <td>@Model.NeedReorderCount</td>
+    </tr>
+</table>

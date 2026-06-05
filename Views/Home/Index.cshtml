@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="lab-hero">
+    <h1>ASP.NET Core MVC Lab02</h1>
+
+    <p>
+        Mini Bookstore Catalog MVC Application 
+        <br />
+        được xây dựng để minh họa cách sử dụng ASP.NET Core MVC.
+    </p>
+</div>
+
+<div class="info-panel">
+    <h4>Mục tiêu chính của Mini Bookstore Catalog</h4>
+    <p>
+        Giúp người sử dụng nắm bắt được các số liệu cơ bản về kho sách.
+    </p>
+</div>
+
+<h3>Luồng xử lý chính trong MVC</h3>
+
+<ol class="flow-list">
+    <li>1. User gửi request đến URL.</li>
+    <li>2. Controller Action nhận request.</li>
+    <li>3. Controller gọi Service để lấy dữ liệu.</li>
+    <li>4. Controller chuyển dữ liệu sang ViewModel.</li>
+    <li>5. View dùng Razor để render HTML và trả về cho trình duyệt.</li>
+</ol>
+
+<div class="text-center mt-4">
+    <a class="btn btn-primary btn-lg" href="/Books">
+        Đi đến Books Catalog
+    </a>
+</div>

@@ -1,0 +1,77 @@
+@model List<BookListViewModel>
+
+@{
+    ViewData["Title"] = "Book Catalog";
+    var totalItems = Model.Count;
+}
+
+<div class="page-header">
+    <div>
+        <h2 class="page-title">Book Catalog</h2>
+        <p class="page-description">
+            Day la trang danh sach sach cua cua hang.
+        </p>
+    </div>
+
+    <div>
+        <a class="btn btn-primary" href="/Books/Stats">
+            Xem thong ke ton kho
+        </a>
+    </div>
+</div>
+
+<div class="info-panel">
+    <strong>Tong so sach:</strong> @totalItems
+</div>
+
+@if (Model.Count == 0)
+{
+    <p>Chua co sach nao trong he thong.</p>
+}
+else
+{
+    <table class="table table-bordered table-striped align-middle">
+        <thead>
+            <tr>
+                <th>ISBN</th>
+                <th>Ten sach</th>
+                <th>Tac gia</th>
+                <th>The loai</th>
+                <th>Gia ban</th>
+                <th>So luong</th>
+                <th>Gia tri ton kho</th>
+                <th>Trang thai</th>
+                <th>Chi tiet</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ISBN</td>
+                    <td>@item.Title</td>
+                    <td>@item.Author</td>
+                    <td>@item.Category</td>
+                    <td>@item.PriceText</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.InventoryValueText</td>
+                    <td>
+                        <span class="@item.StockStatusClass">
+                            @item.StockStatus
+                        </span>
+                    </td>
+                    <td>
+                        <a href="/Books/Detail/@item.Id">Xem</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<p class="mt-4">
+    <a class="btn btn-light" href="/">
+        Quay lai trang chu
+    </a>
+</p>

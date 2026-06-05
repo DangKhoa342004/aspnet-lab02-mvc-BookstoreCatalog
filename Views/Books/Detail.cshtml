@@ -1,0 +1,104 @@
+@model BookDetailViewModel
+
+@{
+    ViewData["Title"] = "Book Detail";
+}
+
+<div class="page-header">
+    <div>
+        <h2 class="page-title">Book Detail</h2>
+        <p class="page-description">
+            Thong tin chi tiet cua sach trong kho.
+        </p>
+    </div>
+
+    <a class="btn btn-light" href="/Books">
+        Quay lai danh sach
+    </a>
+</div>
+
+<div class="detail-layout">
+    <div>
+        <table class="table table-bordered">
+            <tr>
+                <th>ID</th>
+                <td>@Model.Id</td>
+            </tr>
+
+            <tr>
+                <th>ISBN</th>
+                <td>@Model.ISBN</td>
+            </tr>
+
+            <tr>
+                <th>Ten sach</th>
+                <td>@Model.Title</td>
+            </tr>
+
+            <tr>
+                <th>Tac gia</th>
+                <td>@Model.Author</td>
+            </tr>
+
+            <tr>
+                <th>The loai</th>
+                <td>@Model.Category</td>
+            </tr>
+
+            <tr>
+                <th>Gia ban</th>
+                <td>@Model.PriceText</td>
+            </tr>
+
+            <tr>
+                <th>So luong ton kho</th>
+                <td>@Model.Quantity</td>
+            </tr>
+
+            <tr>
+                <th>Muc ton toi thieu</th>
+                <td>@Model.MinStock</td>
+            </tr>
+
+            <tr>
+                <th>Gia tri ton kho</th>
+                <td>@Model.InventoryValueText</td>
+            </tr>
+
+            <tr>
+                <th>Trang thai</th>
+                <td>@Model.StockStatus</td>
+            </tr>
+
+            <tr>
+                <th>Goi y nhap hang</th>
+                <td>@Model.ReorderSuggestion</td>
+            </tr>
+
+            <tr>
+                <th>Cap nhat lan cuoi</th>
+                <td>@Model.LastUpdatedText</td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <div class="side-card warning">
+            <h4>Trang thai ton kho</h4>
+            <h3>@Model.StockStatus</h3>
+            <p>@Model.ReorderSuggestion</p>
+        </div>
+
+        <div class="side-card info">
+            <h4>Gia tri ton kho hien tai</h4>
+            <h3>@Model.InventoryValueText</h3>
+            <p>Tinh theo gia ban va so luong ton kho hien co.</p>
+        </div>
+
+        <div class="side-card success">
+            <h4>Cap nhat lan cuoi</h4>
+            <h3>@Model.LastUpdatedText</h3>
+            <p>Thong tin san pham duoc cap nhat gan nhat.</p>
+        </div>
+    </div>
+</div>
