@@ -17,7 +17,7 @@ public class BookService
             UnitPrice = 130000,
             Quantity = 18,
             MinStock = 5,
-            LastUpdatedAt = new DateTime(2025, 5, 9, 9, 12, 0)
+            LastUpdatedAt = new DateTime(2026, 5, 5, 8, 12, 0)
         },
         new Book
         {
@@ -29,7 +29,7 @@ public class BookService
             UnitPrice = 95000,
             Quantity = 4,
             MinStock = 5,
-            LastUpdatedAt = new DateTime(2025, 5, 9, 9, 12, 0)
+            LastUpdatedAt = new DateTime(2026, 5, 5, 8, 16, 0)
         },
         new Book
         {
@@ -41,7 +41,7 @@ public class BookService
             UnitPrice = 320000,
             Quantity = 0,
             MinStock = 3,
-            LastUpdatedAt = new DateTime(2025, 5, 9, 9, 12, 0)
+            LastUpdatedAt = new DateTime(2026, 5, 3, 9, 0, 0)
         },
         new Book
         {
@@ -53,7 +53,7 @@ public class BookService
             UnitPrice = 200000,
             Quantity = 9,
             MinStock = 4,
-            LastUpdatedAt = new DateTime(2025, 5, 9, 9, 12, 0)
+            LastUpdatedAt = new DateTime(2026, 3, 5, 8, 12, 0)
         },
         new Book
         {
@@ -65,7 +65,7 @@ public class BookService
             UnitPrice = 1500000,
             Quantity = 2,
             MinStock = 6,
-            LastUpdatedAt = new DateTime(2025, 5, 9, 9, 12, 0)
+            LastUpdatedAt = new DateTime(2026, 5, 16, 15, 0, 0)
         },
         new Book
         {
@@ -77,7 +77,7 @@ public class BookService
             UnitPrice = 69000,
             Quantity = 0,
             MinStock = 3,
-            LastUpdatedAt = new DateTime(2025, 5, 9, 9, 12, 0)
+            LastUpdatedAt = new DateTime(2026, 4, 3, 20, 30, 0)
         },
         new Book
         {
@@ -89,7 +89,7 @@ public class BookService
             UnitPrice = 125000,
             Quantity = 10,
             MinStock = 5,
-            LastUpdatedAt = new DateTime(2025, 5, 9, 9, 12, 0)
+            LastUpdatedAt = new DateTime(2026, 6, 5, 3, 12, 0)
         },
         new Book
         {
@@ -101,7 +101,7 @@ public class BookService
             UnitPrice = 90000,
             Quantity = 21,
             MinStock = 10,
-            LastUpdatedAt = new DateTime(2025, 5, 9, 9, 12, 0)
+            LastUpdatedAt = new DateTime(2026, 5, 5, 15, 12, 0)
         }
     };
 

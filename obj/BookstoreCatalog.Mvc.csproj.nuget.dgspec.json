@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ASUS\\Desktop\\API_ASPNET\\Lab02\\BookstoreCatalog.Mvc\\BookstoreCatalog.Mvc.csproj": {}
+    "C:\\Users\\ASUS\\Desktop\\API_ASPNET\\Lab02\\BookstoreCatalog.mvc\\BookstoreCatalog.Mvc.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ASUS\\Desktop\\API_ASPNET\\Lab02\\BookstoreCatalog.Mvc\\BookstoreCatalog.Mvc.csproj": {
+    "C:\\Users\\ASUS\\Desktop\\API_ASPNET\\Lab02\\BookstoreCatalog.mvc\\BookstoreCatalog.Mvc.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ASUS\\Desktop\\API_ASPNET\\Lab02\\BookstoreCatalog.Mvc\\BookstoreCatalog.Mvc.csproj",
+        "projectUniqueName": "C:\\Users\\ASUS\\Desktop\\API_ASPNET\\Lab02\\BookstoreCatalog.mvc\\BookstoreCatalog.Mvc.csproj",
         "projectName": "BookstoreCatalog.Mvc",
-        "projectPath": "C:\\Users\\ASUS\\Desktop\\API_ASPNET\\Lab02\\BookstoreCatalog.Mvc\\BookstoreCatalog.Mvc.csproj",
+        "projectPath": "C:\\Users\\ASUS\\Desktop\\API_ASPNET\\Lab02\\BookstoreCatalog.mvc\\BookstoreCatalog.Mvc.csproj",
         "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ASUS\\Desktop\\API_ASPNET\\Lab02\\BookstoreCatalog.Mvc\\obj\\",
+        "outputPath": "C:\\Users\\ASUS\\Desktop\\API_ASPNET\\Lab02\\BookstoreCatalog.mvc\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config"

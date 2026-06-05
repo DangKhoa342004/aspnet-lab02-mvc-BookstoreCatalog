@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "f2EUThHrlig=",
+  "dgSpecHash": "31tJScQAi90=",
   "success": true,
-  "projectFilePath": "C:\\Users\\ASUS\\Desktop\\API_ASPNET\\Lab02\\BookstoreCatalog.Mvc\\BookstoreCatalog.Mvc.csproj",
+  "projectFilePath": "C:\\Users\\ASUS\\Desktop\\API_ASPNET\\Lab02\\BookstoreCatalog.mvc\\BookstoreCatalog.Mvc.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
