@@ -201,4 +201,13 @@ public class BookService
 
         return book;
     }
+
+    public List<string> GetAllCategories()
+    {
+        return _books
+            .Select(book => book.Category)
+            .Distinct()
+            .OrderBy(category => category)
+            .ToList();
+    }
 }

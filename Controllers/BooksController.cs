@@ -78,7 +78,8 @@ public class BooksController : Controller
 
     public IActionResult CategoryInfo()
     {
-        return Content("Danh mục hiện có: Self-Help, Novel, Romance, Chill");
+        var categories = _bookService.GetAllCategories();
+        return Json(categories);
     }
 
     private static BookListViewModel ToListItemViewModel(Book book)
