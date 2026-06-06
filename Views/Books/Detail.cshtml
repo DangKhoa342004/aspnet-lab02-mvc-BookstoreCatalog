@@ -8,12 +8,12 @@
     <div>
         <h2 class="page-title">Book Detail</h2>
         <p class="page-description">
-            Thong tin chi tiet cua sach trong kho.
+            Thông tin chi tiết của sách trong kho.
         </p>
     </div>
 
     <a class="btn btn-light" href="/Books">
-        Quay lai danh sach
+        Quay lại danh sách
     </a>
 </div>
 
@@ -31,52 +31,52 @@
             </tr>
 
             <tr>
-                <th>Ten sach</th>
+                <th>Tên sách</th>
                 <td>@Model.Title</td>
             </tr>
 
             <tr>
-                <th>Tac gia</th>
+                <th>Tác giả</th>
                 <td>@Model.Author</td>
             </tr>
 
             <tr>
-                <th>The loai</th>
+                <th>Thể loại</th>
                 <td>@Model.Category</td>
             </tr>
 
             <tr>
-                <th>Gia ban</th>
+                <th>Giá bán</th>
                 <td>@Model.PriceText</td>
             </tr>
 
             <tr>
-                <th>So luong ton kho</th>
+                <th>Số lượng tồn kho</th>
                 <td>@Model.Quantity</td>
             </tr>
 
             <tr>
-                <th>Muc ton toi thieu</th>
+                <th>Mức tồn tối thiểu</th>
                 <td>@Model.MinStock</td>
             </tr>
 
             <tr>
-                <th>Gia tri ton kho</th>
+                <th>Giá trị tồn kho</th>
                 <td>@Model.InventoryValueText</td>
             </tr>
 
             <tr>
-                <th>Trang thai</th>
+                <th>Trạng thái</th>
                 <td>@Model.StockStatus</td>
             </tr>
 
             <tr>
-                <th>Goi y nhap hang</th>
+                <th>Gợi ý nhập hàng</th>
                 <td>@Model.ReorderSuggestion</td>
             </tr>
 
             <tr>
-                <th>Cap nhat lan cuoi</th>
+                <th>Cập nhật lần cuối</th>
                 <td>@Model.LastUpdatedText</td>
             </tr>
         </table>
@@ -84,21 +84,21 @@
 
     <div>
         <div class="side-card warning">
-            <h4>Trang thai ton kho</h4>
+            <h4>Trạng thái tồn kho</h4>
             <h3>@Model.StockStatus</h3>
             <p>@Model.ReorderSuggestion</p>
         </div>
 
         <div class="side-card info">
-            <h4>Gia tri ton kho hien tai</h4>
+            <h4>Giá trị tồn kho hiện tại</h4>
             <h3>@Model.InventoryValueText</h3>
-            <p>Tinh theo gia ban va so luong ton kho hien co.</p>
+            <p>Tính theo giá bán và số lượng tồn kho hiện có.</p>
         </div>
 
         <div class="side-card success">
-            <h4>Cap nhat lan cuoi</h4>
+            <h4>Cập nhật lần cuối</h4>
             <h3>@Model.LastUpdatedText</h3>
-            <p>Thong tin san pham duoc cap nhat gan nhat.</p>
+            <p>Thông tin sản phẩm được cập nhật gần nhất.</p>
         </div>
     </div>
 </div>

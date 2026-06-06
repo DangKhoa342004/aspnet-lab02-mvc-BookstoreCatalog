@@ -32,22 +32,22 @@ public class BookDetailViewModel
     {
         get
         {
-            if (Quantity >= 20)
+            if (Quantity >= 15)
             {
-                return "Hang con nhieu";
+                return "Hàng còn nhiều";
             }
 
             if (Quantity <= 0)
             {
-                return "Het hang";
+                return "Hết hàng";
             }
 
             if (Quantity <= MinStock)
             {
-                return "Can bo sung hang";
+                return "Cần bổ sung hàng";
             }
 
-            return "Con hang";
+            return "Còn hàng";
         }
     }
 
@@ -57,15 +57,15 @@ public class BookDetailViewModel
         {
             if (Quantity <= 0)
             {
-                return "Can nhap hang ngay vi san pham da het.";
+                return "Cần nhập hàng ngay vì sản phẩm đã hết.";
             }
 
             if (Quantity <= MinStock)
             {
-                return $"Nen nhap them. Ton kho hien tai chi con {Quantity}, muc toi thieu la {MinStock}.";
+                return $"Cần nhập thêm. Tồn kho hiện tại chỉ còn {Quantity}, mức tối thiểu là {MinStock}.";
             }
 
-            return "Ton kho dang on dinh, chua can nhap them.";
+            return "Tồn kho đang ổn định, chưa cần nhập thêm.";
         }
     }
 }

@@ -8,55 +8,55 @@
     <div>
         <h2 class="page-title">Inventory Stats</h2>
         <p class="page-description">
-            Trang nay giup ban xem nhanh tong quan tinh hinh ton kho cua cua hang.
+            Trang này giúp bạn xem nhanh tổng quan tình hình tồn kho của cửa hàng.
         </p>
     </div>
 
     <a class="btn btn-light" href="/Books">
-        Quay lai danh sach
+        Quay lại danh sách
     </a>
 </div>
 
 <div class="stat-grid">
     <div class="stat-card">
         <div class="stat-number">@Model.TotalBooks</div>
-        <div class="stat-label">Tong so loai san pham</div>
+        <div class="stat-label">Tổng số loại sản phẩm</div>
     </div>
 
     <div class="stat-card">
         <div class="stat-number">@Model.TotalQuantity</div>
-        <div class="stat-label">Tong so luong ton kho</div>
+        <div class="stat-label">Tổng số lượng tồn kho</div>
     </div>
 
     <div class="stat-card">
         <div class="stat-number">@Model.TotalInventoryValueText</div>
-        <div class="stat-label">Tong gia tri ton kho</div>
+        <div class="stat-label">Tổng giá trị tồn kho</div>
     </div>
 
     <div class="stat-card">
         <div class="stat-number text-danger">@Model.OutOfStockCount</div>
-        <div class="stat-label">San pham da het hang</div>
+        <div class="stat-label">Sản phẩm đã hết hàng</div>
     </div>
 
     <div class="stat-card">
         <div class="stat-number text-warning">@Model.NeedReorderCount</div>
-        <div class="stat-label">San pham can nhap them</div>
+        <div class="stat-label">Sản phẩm cần nhập thêm</div>
     </div>
 </div>
 
 <div class="info-panel">
-    <h4>Danh gia tinh hinh ton kho</h4>
+    <h4>Danh giá tình hình tồn kho</h4>
 
     @if (Model.OutOfStockCount > 0)
     {
         <p class="text-danger">
-            Co san pham da het hang. Can kiem tra va nhap hang som.
+            Có sản phẩm đã hết hàng. Cần kiểm tra và nhập hàng sớm.
         </p>
     }
     else if (Model.NeedReorderCount > 0)
     {
         <p class="text-warning">
-            Mot so san pham gan het hang. Nen lap ke hoach nhap them.
+           Một số sản phẩm gần hết hàng. Cần lập kế hoạch nhập thêm.
         </p>
     }
     else

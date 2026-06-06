@@ -36,7 +36,7 @@ public class BookService
             Id = 3,
             ISBN = "9786045598351",
             Title = "Thực sắc",
-            Author = "Ninh Vien",
+            Author = "Ninh Viễn",
             Category = "Romance",
             UnitPrice = 320000,
             Quantity = 0,
