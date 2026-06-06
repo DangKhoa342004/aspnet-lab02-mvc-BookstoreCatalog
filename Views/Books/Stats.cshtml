@@ -17,7 +17,7 @@
     </a>
 </div>
 
-<div class="stat-grid">
+<div class="stats-grid">
     <div class="stat-card">
         <div class="stat-number">@Model.TotalBooks</div>
         <div class="stat-label">Tổng số loại sản phẩm</div>
@@ -34,12 +34,12 @@
     </div>
 
     <div class="stat-card">
-        <div class="stat-number text-danger">@Model.OutOfStockCount</div>
+        <div class="stat-number"><span class="text-danger">@Model.OutOfStockCount</span></div>
         <div class="stat-label">Sản phẩm đã hết hàng</div>
     </div>
 
     <div class="stat-card">
-        <div class="stat-number text-warning">@Model.NeedReorderCount</div>
+        <div class="stat-number"><span class="text-warning">@Model.NeedReorderCount</span></div>
         <div class="stat-label">Sản phẩm cần nhập thêm</div>
     </div>
 </div>
@@ -69,27 +69,27 @@
 
 <table class="table table-bordered mt-4">
     <tr>
-        <th>Tong so loai san pham</th>
+        <th>Tổng số loại sản phẩm</th>
         <td>@Model.TotalBooks</td>
     </tr>
 
     <tr>
-        <th>Tong so luong ton kho</th>
+        <th>Tổng số lượng tồn kho</th>
         <td>@Model.TotalQuantity</td>
     </tr>
 
     <tr>
-        <th>Tong gia tri ton kho</th>
+        <th>Tổng giá trị tồn kho</th>
         <td>@Model.TotalInventoryValueText</td>
     </tr>
 
     <tr>
-        <th>San pham da het hang</th>
+        <th>Sản phẩm đã hết hàng</th>
         <td>@Model.OutOfStockCount</td>
     </tr>
 
     <tr>
-        <th>San pham can nhap them</th>
+        <th>Sản phẩm cần nhập thêm</th>
         <td>@Model.NeedReorderCount</td>
     </tr>
 </table>
