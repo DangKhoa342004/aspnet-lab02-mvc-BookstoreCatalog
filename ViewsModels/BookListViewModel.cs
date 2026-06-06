@@ -30,20 +30,20 @@ public class BookListViewModel
         {
             if (Quantity >= 15)
             {
-                return "Hang con nhieu";
+                return "Hàng còn nhiều";
             }
 
             if (Quantity <= 0)
             {
-                return "Het hang";
+                return "Hết hàng";
             }
 
             if (Quantity <= MinStock)
             {
-                return "Can bo sung hang";
+                return "Cần bổ sung hàng";
             }
 
-            return "Con hang";
+            return "Còn hàng";
         }
     }
 

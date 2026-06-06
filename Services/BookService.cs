@@ -11,7 +11,7 @@ public class BookService
         {
             Id = 1,
             ISBN = "8935280919266",
-            Title = "Dac Nhan Tam",
+            Title = "Đắc Nhân Tâm",
             Author = "Dale Carnegie",
             Category = "Self-Help",
             UnitPrice = 130000,
@@ -23,7 +23,7 @@ public class BookService
         {
             Id = 2,
             ISBN = "8935235226272",
-            Title = "Nha Gia Kim",
+            Title = "Nhà Giả Kim",
             Author = "Paulo Coelho",
             Category = "Novel",
             UnitPrice = 95000,
@@ -35,7 +35,7 @@ public class BookService
         {
             Id = 3,
             ISBN = "9786045598351",
-            Title = "Thuc sac",
+            Title = "Thực sắc",
             Author = "Ninh Vien",
             Category = "Romance",
             UnitPrice = 320000,
@@ -47,7 +47,7 @@ public class BookService
         {
             Id = 4,
             ISBN = "9786044809953",
-            Title = "Rooms Tuyen tap tranh minh hoa",
+            Title = "Rooms Tuyển tập tranh minh họa",
             Author = "Senbon Umishima",
             Category = "Chill",
             UnitPrice = 200000,
@@ -59,7 +59,7 @@ public class BookService
         {
             Id = 5,
             ISBN = "9786043828627",
-            Title = "Roi hoa se no - Bloom into you",
+            Title = "Rồi hoa sẽ nở - Bloom into you",
             Author = "Nakatani Nio",
             Category = "Romance",
             UnitPrice = 1500000,
@@ -71,8 +71,8 @@ public class BookService
         {
             Id = 6,
             ISBN = "8936883231519",
-            Title = "Se co cach dung lo",
-            Author = "Tue Nghi",
+            Title = "Sẽ có cách đừng lo",
+            Author = "Tuệ Nghi",
             Category = "Self-Help",
             UnitPrice = 69000,
             Quantity = 0,
@@ -83,8 +83,8 @@ public class BookService
         {
             Id = 7,
             ISBN = "9786041198456",
-            Title = "Ngay xua co mot chuyen tinh",
-            Author = "Nguyen Nhat Anh",
+            Title = "Ngày xưa có một chuyện tình",
+            Author = "Nguyễn Nhật Ánh",
             Category = "Romance",
             UnitPrice = 125000,
             Quantity = 10,
@@ -95,8 +95,8 @@ public class BookService
         {
             Id = 8,
             ISBN = "9786043199703",
-            Title = "Tuoi tre dang gia bao nhieu",
-            Author = "Rossie Nguyen",
+            Title = "Tuổi trẻ đáng giá bao nhiêu",
+            Author = "Rossie Nguyễn",
             Category = "Self-Help",
             UnitPrice = 90000,
             Quantity = 21,
@@ -138,5 +138,67 @@ public class BookService
             OutOfStockCount = outOfStockCount,
             NeedReorderCount = needReorderCount
         };
+    }
+
+    public string GenerateNewIsbn()
+    {
+        var chars = new char[13];
+        for (int i = 0; i < 13; i++)
+        {
+            chars[i] = (char)('0' + Random.Shared.Next(0, 10));
+        }
+
+        return new string(chars);
+    }
+
+    public List<Book> Search(string? keyword, decimal? minPrice)
+    {
+        var query = _books.AsEnumerable();
+
+        if (!string.IsNullOrWhiteSpace(keyword))
+        {
+            query = query.Where(book =>
+                book.Title.Contains(keyword, StringComparison.OrdinalIgnoreCase) ||
+                book.Author.Contains(keyword, StringComparison.OrdinalIgnoreCase) ||
+                book.Category.Contains(keyword, StringComparison.OrdinalIgnoreCase) ||
+                book.ISBN.Contains(keyword, StringComparison.OrdinalIgnoreCase));
+        }
+
+        if (minPrice.HasValue)
+        {
+            query = query.Where(book => book.UnitPrice >= minPrice.Value);
+        }
+
+        return query.ToList();
+    }
+
+    public Book Create(BookCreateViewModel model)
+    {
+        var newId = _books.Count == 0
+            ? 1
+            : _books.Max(book => book.Id) + 1;
+
+        var newISBN = string.Empty;
+        if (string.IsNullOrEmpty(newISBN))
+        {
+            newISBN = GenerateNewIsbn();
+        }
+
+        var book = new Book
+        {
+            Id = newId,
+            ISBN = newISBN,
+            Title = model.Title,
+            Author = model.Author,
+            Category = model.Category,
+            UnitPrice = model.UnitPrice,
+            Quantity = model.Quantity,
+            MinStock = model.MinStock,
+            LastUpdatedAt = DateTime.Now
+        };
+
+        _books.Add(book);
+
+        return book;
     }
 }

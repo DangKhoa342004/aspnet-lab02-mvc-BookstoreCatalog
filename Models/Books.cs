@@ -12,7 +12,6 @@ public class Book
 
     public string Category { get; set; } = "";
 
-
     public decimal UnitPrice { get; set; }
 
     public int Quantity { get; set; }
