@@ -63,7 +63,9 @@
 
         @if (Model.Books.Count == 0)
         {
-            <p>Không tìm thấy sách phù hợp.</p>
+            <div class="alert alert-warning" role="alert">
+                <strong>Không tìm thấy sách phù hợp.</strong> Vui lòng thử từ khóa khác.
+            </div>
         }
         else
         {
