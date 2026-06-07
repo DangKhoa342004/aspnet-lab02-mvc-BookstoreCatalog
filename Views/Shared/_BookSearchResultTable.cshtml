@@ -1,0 +1,38 @@
+@model IEnumerable<BookstoreCatalog.Mvc.ViewModels.BookListViewModel>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tên sách</th>
+            <th>Tác giả</th>
+            <th>Thể loại</th>
+            <th>Giá bán</th>
+            <th>Số lượng</th>
+            <th>Trạng thái</th>
+            <th>Chi tiết</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.Author</td>
+                <td>@item.Category</td>
+                <td>@item.PriceText</td>
+                <td>@item.Quantity</td>
+                <td>
+                    <span class="@item.StockStatusClass">@item.StockStatus</span>
+                </td>
+                <td>
+                    <a asp-controller="Books"
+                       asp-action="Detail"
+                       asp-route-id="@item.Id">
+                        Xem
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
