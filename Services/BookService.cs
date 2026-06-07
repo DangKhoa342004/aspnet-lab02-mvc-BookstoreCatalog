@@ -142,13 +142,20 @@ public class BookService
 
     public string GenerateNewIsbn()
     {
-        var chars = new char[13];
-        for (int i = 0; i < 13; i++)
+        var digits = new char[13];
+        digits[0] = '9';
+        digits[1] = '7';
+        digits[2] = '9';
+        digits[3] = '6';
+        digits[4] = '0';
+        digits[5] = '4';
+
+        for (int i = 6; i < 13; i++)
         {
-            chars[i] = (char)('0' + Random.Shared.Next(0, 10));
+            digits[i] = (char)('0' + Random.Shared.Next(0, 10));
         }
 
-        return new string(chars);
+        return new string(digits);
     }
 
     public List<Book> Search(string? keyword, decimal? minPrice)
