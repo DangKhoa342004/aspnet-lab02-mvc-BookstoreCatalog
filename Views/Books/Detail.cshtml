@@ -26,11 +26,6 @@
             </tr>
 
             <tr>
-                <th>ISBN</th>
-                <td>@Model.ISBN</td>
-            </tr>
-
-            <tr>
                 <th>Tên sách</th>
                 <td>@Model.Title</td>
             </tr>
@@ -42,7 +37,7 @@
 
             <tr>
                 <th>Thể loại</th>
-                <td>@Model.Category</td>
+                <td>@Model.GenreName</td>
             </tr>
 
             <tr>
@@ -52,12 +47,7 @@
 
             <tr>
                 <th>Số lượng tồn kho</th>
-                <td>@Model.Quantity</td>
-            </tr>
-
-            <tr>
-                <th>Mức tồn tối thiểu</th>
-                <td>@Model.MinStock</td>
+                <td>@Model.Stock</td>
             </tr>
 
             <tr>
@@ -67,38 +57,17 @@
 
             <tr>
                 <th>Trạng thái</th>
-                <td>@Model.StockStatus</td>
-            </tr>
-
-            <tr>
-                <th>Gợi ý nhập hàng</th>
-                <td>@Model.ReorderSuggestion</td>
-            </tr>
-
-            <tr>
-                <th>Cập nhật lần cuối</th>
-                <td>@Model.LastUpdatedText</td>
+                <td>
+                    @if (Model.IsLowStock)
+                    {
+                        <span class="badge bg-danger">Sắp hết hàng</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success">Còn đủ hàng</span>
+                    }
+                </td>
             </tr>
         </table>
-    </div>
-
-    <div>
-        <div class="side-card warning">
-            <h4>Trạng thái tồn kho</h4>
-            <h3>@Model.StockStatus</h3>
-            <p>@Model.ReorderSuggestion</p>
-        </div>
-
-        <div class="side-card info">
-            <h4>Giá trị tồn kho hiện tại</h4>
-            <h3>@Model.InventoryValueText</h3>
-            <p>Tính theo giá bán và số lượng tồn kho hiện có.</p>
-        </div>
-
-        <div class="side-card success">
-            <h4>Cập nhật lần cuối</h4>
-            <h3>@Model.LastUpdatedText</h3>
-            <p>Thông tin sản phẩm được cập nhật gần nhất.</p>
-        </div>
     </div>
 </div>

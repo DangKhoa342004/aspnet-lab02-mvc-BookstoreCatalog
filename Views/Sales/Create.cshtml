@@ -1,0 +1,71 @@
+@model BookstoreCatalog.Mvc.ViewModels.SaleCreateViewModel
+
+@{
+    ViewData["Title"] = "Create Order Sale";
+}
+
+<div class="page-header">
+    <div>
+        <h2 class="page-title">Create Order Sale with Transaction</h2>
+    </div>
+
+    <a class="btn btn-light"
+       asp-controller="Books"
+       asp-action="Index">
+        Quay lại danh sách sản phẩm
+    </a>
+</div>
+
+<div class="form-layout">
+    <form class="form-box"
+          asp-controller="Sales"
+          asp-action="Create"
+          method="post">
+
+        @Html.AntiForgeryToken()
+
+        <div asp-validation-summary="All"></div>
+
+        <div class="form-group">
+            <label asp-for="CustomerName">Customer Name</label>
+            <input asp-for="CustomerName"
+                   class="form-control"
+                   placeholder="Ví dụ: Nguyễn Văn A" />
+            <span asp-validation-for="CustomerName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="BookId">Book</label>
+            <input asp-for="BookId"
+                   class="form-control"
+                   placeholder="Ví dụ: 1, 2, 3, ..." />
+            <span asp-validation-for="BookId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Quantity">Quantity</label>
+            <input asp-for="Quantity"
+                   class="form-control"
+                   placeholder="Ví dụ: 12" />
+            <span asp-validation-for="Quantity" class="text-danger"></span>
+        </div>
+
+        <button class="btn" type="submit">
+            Save
+        </button>
+
+        <a class="btn btn-secondary"
+           asp-controller="Sales"
+           asp-action="Index">
+            Back
+        </a>
+    </form>
+
+    <div class="info-box">
+        <h3>Transaction Flow</h3>
+
+        <p>
+            Create Order Sale, add SaleItem, subtract Stock. If any step fails, rollback all changes.
+        </p>
+    </div>
+</div>

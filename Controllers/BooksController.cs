@@ -1,69 +1,39 @@
-using BookstoreCatalog.Mvc.Models;
-using BookstoreCatalog.Mvc.Services;
 using BookstoreCatalog.Mvc.ViewModels;
+using BookstoreCatalog.Mvc.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookstoreCatalog.Mvc.Controllers;
 
 public class BooksController : Controller
 {
-    private readonly BookService _bookService;
+    private readonly IBookService _bookService;
 
-    public BooksController(BookService bookService)
+    public BooksController(IBookService bookService)
     {
         _bookService = bookService;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        var books = _bookService.GetAll()
-            .Select(ToListItemViewModel)
-            .ToList();
-
+        var books = await _bookService.GetBookListAsync();
         return View(books);
     }
 
-    public IActionResult Detail(int id)
+    public async Task<IActionResult> Detail(int id)
     {
-        var book = _bookService.GetById(id);
+        var viewModel = await _bookService.GetBookDetailAsync(id);
 
-        if (book == null)
+        if (viewModel == null)
         {
-            return NotFound($"Khong tim thay sach co id = {id}");
+            return NotFound($"Không tìm thấy cuốn sách có id = {id}");
         }
-
-        var viewModel = ToDetailViewModel(book);
 
         return View(viewModel);
     }
 
-    public IActionResult Stats()
-    {
-        var stats = _bookService.GetStats();
-
-        return View(stats);
-    }
-
     public IActionResult Welcome()
     {
-        return Content("Welcome to Mini Bookstore Catalog API!");
-    }
-
-    public IActionResult BookJson()
-    {
-        var books = _bookService.GetAll()
-            .Select(book => new
-            {
-                book.Id,
-                book.ISBN,
-                book.Title,
-                book.Author,
-                book.Category,
-                book.UnitPrice,
-                book.Quantity
-            });
-
-        return Json(books);
+        return Content("Welcome to ASP.NET Core MVC Lab04");
     }
 
     public IActionResult GoToList()
@@ -76,85 +46,11 @@ public class BooksController : Controller
         return NotFound("Đây là response 404 demo từ action Force404.");
     }
 
-    public IActionResult CategoryInfo()
-    {
-        var categories = _bookService.GetAllCategories();
-        return Json(categories);
-    }
-
-    private static BookListViewModel ToListItemViewModel(Book book)
-    {
-        return new BookListViewModel
-        {
-            Id = book.Id,
-            ISBN = book.ISBN,
-            Title = book.Title,
-            Author = book.Author,
-            Category = book.Category,
-            UnitPrice = book.UnitPrice,
-            Quantity = book.Quantity,
-            MinStock = book.MinStock
-        };
-    }
-
-    private static BookDetailViewModel ToDetailViewModel(Book book)
-    {
-        return new BookDetailViewModel
-        {
-            Id = book.Id,
-            ISBN = book.ISBN,
-            Title = book.Title,
-            Author = book.Author,
-            Category = book.Category,
-            UnitPrice = book.UnitPrice,
-            Quantity = book.Quantity,
-            MinStock = book.MinStock,
-            LastUpdatedAt = book.LastUpdatedAt
-        };
-    }
-
     [HttpGet]
-    public IActionResult Search(string? keyword, decimal? minPrice)
+    public async Task<IActionResult> Filter(int? genreId, decimal? minPrice, decimal? maxPrice)
     {
-        var books = _bookService.Search(keyword, minPrice)
-            .Select(ToListItemViewModel)
-            .ToList();
-
-        var viewModel = new BookSearchViewModel
-        {
-            Keyword = keyword ?? "",
-            MinPrice = minPrice,
-            Books = books
-        };
-
+        var viewModel = await _bookService.GetFilteredBooksViewModelAsync(genreId, minPrice, maxPrice);
+    
         return View(viewModel);
-    }
-
-    [HttpGet]
-    public IActionResult Create()
-    {
-        var viewModel = new BookCreateViewModel
-        {
-            Quantity = 1,
-            MinStock = 1
-        };
-
-        return View(viewModel);
-    }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public IActionResult Create(BookCreateViewModel model)
-    {
-        if (!ModelState.IsValid)
-        {
-            return View(model);
-        }
-
-        _bookService.Create(model);
-
-        TempData["SuccessMessage"] = "Đã thêm sách thành công.";
-
-        return RedirectToAction(nameof(Index));
     }
 }

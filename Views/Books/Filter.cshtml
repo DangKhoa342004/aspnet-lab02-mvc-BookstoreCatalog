@@ -1,0 +1,70 @@
+@model BookstoreCatalog.Mvc.ViewModels.BookFilterViewModel
+
+@{
+    ViewData["Title"] = "Book Filter";
+}
+
+<div class="page-header">
+    <h2 class="dashboard-title">Bộ lọc sách</h2>
+    <p>Trang sử dụng kỹ thuật AsNoTracking và kết hợp dữ liệu Relationship giữa Book & Genre.</p>
+</div>
+
+<div class="form-layout">
+    <form class="form-box"
+          asp-controller="Books"
+          asp-action="Filter"
+          method="get">
+        
+        <div class="form-group">
+            <label asp-for="GenreId">Mã Thể Loại</label>
+            <input type="number" name="genreId" value="@Model.GenreId" class="form-control" placeholder="Ví dụ: 1, 2..." />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="MinPrice">Giá tối thiểu</label>
+            <input type="number" name="minPrice" value="@Model.MinPrice" class="form-control" placeholder="Ví dụ: 50000" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="MaxPrice">Giá tối đa</label>
+            <input type="number" name="maxPrice" value="@Model.MaxPrice" class="form-control" placeholder="Ví dụ: 500000" />
+        </div>
+
+        <button class="btn" type="submit">
+            Filter
+        </button>
+
+        <a class="btn btn-secondary"
+           asp-controller="Books"
+           asp-action="Filter">
+            Reset
+        </a>
+    </form>
+
+    <div>
+        <h3>Filter Result</h3>
+
+        <p>
+            Genre ID: <strong>@Model.GenreId</strong>
+        </p>
+
+        <p>
+            Min Price: <strong>@Model.MinPrice</strong>
+        </p>
+
+        <p>
+            Max Price: <strong>@Model.MaxPrice</strong>
+        </p>
+
+        @if (Model.Books.Count == 0)
+        {
+            <span class="badge badge-warning">
+                Không tìm thấy sách phù hợp. Vui lòng thử từ khóa khác.
+            </span>
+        }
+        else
+        {
+            @await Html.PartialAsync("_BookSearchResultTable", Model.Books)
+        }
+    </div>
+</div>

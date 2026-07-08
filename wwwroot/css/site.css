@@ -33,6 +33,32 @@ body {
     margin: 24px 0;
 }
 
+.flow-steps {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.step-card {
+    background-color: #ffffff;
+    border: 2px solid #3498db;
+    border-radius: 12px;
+    padding: 12px 20px;
+    font-weight: bold;
+    color: #2c3e50;
+    min-width: 120px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.flow-arrow {
+    font-size: 1.5rem;
+    color: #3498db;
+    font-weight: bold;
+}
+
 .flow-list {
     list-style: none;
     padding-left: 0;
@@ -158,6 +184,14 @@ a:hover {
 .btn:hover {
     background: #1d4ed8;
     text-decoration: none;
+}
+
+.dashboard-title {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: #1a252f;
+    margin-top: 0;
+    margin-bottom: 20px;
 }
 
 .btn-secondary {
@@ -378,6 +412,36 @@ a:hover {
 .side-card.info {
     background: #eff6ff;
     border-color: #bfdbfe;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px;
+}
+
+.product-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+}
+
+.product-card h3 {
+    margin: 0 0 10px;
+}
+
+.product-meta {
+    color: #64748b;
+    margin: 6px 0;
+}
+
+.product-price {
+    color: #1d4ed8;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 14px 0;
 }
 
 .side-card.success {

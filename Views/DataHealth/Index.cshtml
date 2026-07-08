@@ -1,0 +1,37 @@
+@model BookstoreCatalog.Mvc.ViewModels.DataHealthViewModel
+
+@{
+    ViewData["Title"] = "EF Core Data Health";
+}
+
+<div class="container mt-4">
+    <h2 class="dashboard-title">EF Core Data Health</h2>
+
+    <table class="table relationship-table">
+        <thead>
+            <tr>
+                <th>Check</th>
+                <th>Expected</th>
+                <th>Actual</th>
+                <th>Status</th>
+                <th>Note</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td class="font-weight-bold">@item.Check</td>
+                    <td>@item.Expected</td>
+                    <td>@item.Actual</td>
+                    <td>
+                        <span class="badge @(item.Status == "OK" ? "badge-success-custom" : "badge-danger-custom")">
+                            @item.Status
+                        </span>
+                    </td>
+                    <td>@item.Note</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -3,34 +3,36 @@
 }
 
 <div class="lab-hero">
-    <h1>ASP.NET Core MVC Lab02 và Lab03</h1>
+    <h1>Mini Bookstore Catalog</h1>
 
     <p>
-        Mini Bookstore Catalog MVC Application 
-        <br />
-        được xây dựng để minh họa cách sử dụng ASP.NET Core MVC.
+        Bài Lab cho ta hiểu và áp dụng Dependency Injection trong ASP.NET Core MVC
     </p>
 </div>
 
 <div class="info-panel">
     <h4>Mục tiêu chính của Mini Bookstore Catalog</h4>
-    <p>
-        Giúp người sử dụng nắm bắt được các số liệu cơ bản về kho sách.
-    </p>
+    <ul class="mt-3">
+    	<li>Đăng ký DI (Scoped) cho Service, Repository, DbContext.</li>
+        <li>Tách rời Controller khỏi cơ sở dữ liệu bằng kiến trúc phân lớp.</li>
+        <li>Sử dụng Options Pattern để đọc `appsettings.json`.</li>
+        <li>Quản lý CSDL bằng EF Core Migrations & Seed Data.</li>
+        <li>Bảo vệ nghiệp vụ tạo đơn hàng bằng Transaction.</li>
+    </ul>
 </div>
 
-<h3>Luồng xử lý chính trong MVC</h3>
+<h3>Luồng xử lý Data Layer</h3>
 
 <ol class="flow-list">
-    <li>1. User gửi request đến URL.</li>
-    <li>2. Controller Action nhận request.</li>
-    <li>3. Controller gọi Service để lấy dữ liệu.</li>
-    <li>4. Controller chuyển dữ liệu sang ViewModel.</li>
-    <li>5. View dùng Razor để render HTML và trả về cho trình duyệt.</li>
+    <li><b>Controller:</b> Nhận Request, gọi qua Service.</li>
+    <li><b>Service:</b> Xử lý nghiệp vụ, gọi Repository.</li>
+    <li><b>Repository:</b> Chứa truy vấn thô, gọi DbContext.</li>
+    <li><b>DbContext:</b> Ánh xạ LINQ sang lệnh SQL.</li>
+    <li><b>Database:</b> Thực thi và trả dữ liệu ngược lên View.</li>
 </ol>
 
 <div class="text-center mt-4">
     <a class="btn btn-primary btn-lg" href="/Books">
-        Đi đến Books Catalog
+        Đi đến Book Catalog
     </a>
 </div>

@@ -7,26 +7,28 @@
 
 <div class="page-header">
     <div>
-        <h2 class="page-title">Book Catalog</h2>
-        <p class="page-description">
-            Đây là trang danh sách sách của cửa hàng.
-            Giao diện được render bằng Partial View.
-        </p>
+        <h2 class="dashboard-title">Data Layer Dashboard</h2>
+        <div class="flow-steps">
+            <div class="step-card">Controller</div>
+            <div class="flow-arrow">&rarr;</div>
+            <div class="step-card">Service</div>
+            <div class="flow-arrow">&rarr;</div>
+            <div class="step-card">Repository</div>
+            <div class="flow-arrow">&rarr;</div>
+            <div class="step-card">DbContext</div>
+            <div class="flow-arrow">&rarr;</div>
+            <div class="step-card">Database</div>
+        </div>
     </div>
 
     <div>
         <a class="btn btn-secondary"
            asp-controller="Books"
-           asp-action="Search">
-            Search Book
-        </a>
-
-        <a class="btn"
-           asp-controller="Books"
-           asp-action="Create">
-            Create Book
+           asp-action="Filter">
+            Filter Book
         </a>
     </div>
+    
 </div>
 
 @if (TempData["SuccessMessage"] != null)
@@ -46,7 +48,7 @@
 }
 else
 {
-    <div class="book-grid">
+    <div class="product-grid">
         @foreach (var item in Model)
         {
             <partial name="_BookCard" model="item" />

@@ -1,220 +1,78 @@
 using BookstoreCatalog.Mvc.Models;
 using BookstoreCatalog.Mvc.ViewModels;
+using BookstoreCatalog.Mvc.Repositories;
+using BookstoreCatalog.Mvc.Options;
+using Microsoft.Extensions.Options;
 
 namespace BookstoreCatalog.Mvc.Services;
 
-public class BookService
+public class BookService : IBookService
 {
-    private readonly List<Book> _books = new()
-    {
-        new Book
-        {
-            Id = 1,
-            ISBN = "8935280919266",
-            Title = "Đắc Nhân Tâm",
-            Author = "Dale Carnegie",
-            Category = "Self-Help",
-            UnitPrice = 130000,
-            Quantity = 18,
-            MinStock = 5,
-            LastUpdatedAt = new DateTime(2026, 5, 5, 8, 12, 0)
-        },
-        new Book
-        {
-            Id = 2,
-            ISBN = "8935235226272",
-            Title = "Nhà Giả Kim",
-            Author = "Paulo Coelho",
-            Category = "Novel",
-            UnitPrice = 95000,
-            Quantity = 4,
-            MinStock = 5,
-            LastUpdatedAt = new DateTime(2026, 5, 5, 8, 16, 0)
-        },
-        new Book
-        {
-            Id = 3,
-            ISBN = "9786045598351",
-            Title = "Thực sắc",
-            Author = "Ninh Viễn",
-            Category = "Romance",
-            UnitPrice = 320000,
-            Quantity = 0,
-            MinStock = 3,
-            LastUpdatedAt = new DateTime(2026, 5, 3, 9, 0, 0)
-        },
-        new Book
-        {
-            Id = 4,
-            ISBN = "9786044809953",
-            Title = "Rooms Tuyển tập tranh minh họa",
-            Author = "Senbon Umishima",
-            Category = "Chill",
-            UnitPrice = 200000,
-            Quantity = 9,
-            MinStock = 4,
-            LastUpdatedAt = new DateTime(2026, 3, 5, 8, 12, 0)
-        },
-        new Book
-        {
-            Id = 5,
-            ISBN = "9786043828627",
-            Title = "Rồi hoa sẽ nở - Bloom into you",
-            Author = "Nakatani Nio",
-            Category = "Romance",
-            UnitPrice = 1500000,
-            Quantity = 2,
-            MinStock = 6,
-            LastUpdatedAt = new DateTime(2026, 5, 16, 15, 0, 0)
-        },
-        new Book
-        {
-            Id = 6,
-            ISBN = "8936883231519",
-            Title = "Sẽ có cách đừng lo",
-            Author = "Tuệ Nghi",
-            Category = "Self-Help",
-            UnitPrice = 69000,
-            Quantity = 0,
-            MinStock = 3,
-            LastUpdatedAt = new DateTime(2026, 4, 3, 20, 30, 0)
-        },
-        new Book
-        {
-            Id = 7,
-            ISBN = "9786041198456",
-            Title = "Ngày xưa có một chuyện tình",
-            Author = "Nguyễn Nhật Ánh",
-            Category = "Romance",
-            UnitPrice = 125000,
-            Quantity = 10,
-            MinStock = 5,
-            LastUpdatedAt = new DateTime(2026, 6, 5, 3, 12, 0)
-        },
-        new Book
-        {
-            Id = 8,
-            ISBN = "9786043199703",
-            Title = "Tuổi trẻ đáng giá bao nhiêu",
-            Author = "Rossie Nguyễn",
-            Category = "Self-Help",
-            UnitPrice = 90000,
-            Quantity = 21,
-            MinStock = 10,
-            LastUpdatedAt = new DateTime(2026, 5, 5, 15, 12, 0)
-        }
-    };
+    private readonly IBookRepository _bookRepository;
+    private readonly AppSettings _settings;
 
-    public List<Book> GetAll()
+    public BookService(IBookRepository bookRepository, IOptions<AppSettings> options)
     {
-        return _books;
+        _bookRepository = bookRepository;
+        _settings = options.Value;
     }
 
-    public Book? GetById(int id)
+    public async Task<List<BookListViewModel>> GetBookListAsync()
     {
-        return _books.FirstOrDefault(book => book.Id == id);
+        var books = await _bookRepository.GetAllReadOnlyAsync();
+        return books.Select(b => new BookListViewModel
+        {
+            Id = b.Id,
+            ISBN = b.ISBN,
+            Title = b.Title,
+            Author = b.Author,
+            Price = b.Price,
+            Stock = b.Stock,
+            GenreName = b.Genre != null ? b.Genre.Name : "N/A",
+            IsLowStock = b.Stock < _settings.LowStockThreshold
+        }).ToList();
     }
 
-    public BookStatsViewModel GetStats()
+    public async Task<BookDetailViewModel?> GetBookDetailAsync(int id)
     {
-        var totalBooks = _books.Count;
+        var book = await _bookRepository.GetByIdAsync(id);
+        if (book == null) return null;
 
-        var totalQuantity = _books.Sum(book => book.Quantity);
-
-        var totalInventoryValue = _books.Sum(book =>
-            book.UnitPrice * book.Quantity);
-
-        var outOfStockCount = _books.Count(book =>
-            book.Quantity <= 0);
-
-        var needReorderCount = _books.Count(book =>
-            book.Quantity > 0 && book.Quantity <= book.MinStock);
-
-        return new BookStatsViewModel
+        return new BookDetailViewModel
         {
-            TotalBooks = totalBooks,
-            TotalQuantity = totalQuantity,
-            TotalInventoryValue = totalInventoryValue,
-            OutOfStockCount = outOfStockCount,
-            NeedReorderCount = needReorderCount
+            Id = book.Id,
+            ISBN = book.ISBN,
+            Title = book.Title,
+            Author = book.Author,
+            Price = book.Price,
+            Stock = book.Stock,
+            GenreName = book.Genre != null ? book.Genre.Name : "N/A",
+            IsLowStock = book.Stock < _settings.LowStockThreshold
         };
     }
 
-    public string GenerateNewIsbn()
+    public async Task<BookFilterViewModel> GetFilteredBooksViewModelAsync(int? genreId, decimal? minPrice, decimal? maxPrice)
     {
-        var digits = new char[13];
-        digits[0] = '9';
-        digits[1] = '7';
-        digits[2] = '9';
-        digits[3] = '6';
-        digits[4] = '0';
-        digits[5] = '4';
+        var books = await _bookRepository.GetFilteredBooksAsync(genreId, minPrice, maxPrice);
 
-        for (int i = 6; i < 13; i++)
+        var bookViewModels = books.Select(b => new BookListViewModel
         {
-            digits[i] = (char)('0' + Random.Shared.Next(0, 10));
-        }
+            Id = b.Id,
+            ISBN = b.ISBN,
+            Title = b.Title,
+            Author = b.Author,
+            Price = b.Price,
+            Stock = b.Stock,
+            GenreName = b.Genre != null ? b.Genre.Name : "N/A",
+        }).ToList();
 
-        return new string(digits);
-    }
-
-    public List<Book> Search(string? keyword, decimal? minPrice)
-    {
-        var query = _books.AsEnumerable();
-
-        if (!string.IsNullOrWhiteSpace(keyword))
+    
+        return new BookFilterViewModel
         {
-            query = query.Where(book =>
-                book.Title.Contains(keyword, StringComparison.OrdinalIgnoreCase) ||
-                book.Author.Contains(keyword, StringComparison.OrdinalIgnoreCase) ||
-                book.Category.Contains(keyword, StringComparison.OrdinalIgnoreCase) ||
-                book.ISBN.Contains(keyword, StringComparison.OrdinalIgnoreCase));
-        }
-
-        if (minPrice.HasValue)
-        {
-            query = query.Where(book => book.UnitPrice >= minPrice.Value);
-        }
-
-        return query.ToList();
-    }
-
-    public Book Create(BookCreateViewModel model)
-    {
-        var newId = _books.Count == 0
-            ? 1
-            : _books.Max(book => book.Id) + 1;
-
-        var newISBN = string.Empty;
-        if (string.IsNullOrEmpty(newISBN))
-        {
-            newISBN = GenerateNewIsbn();
-        }
-
-        var book = new Book
-        {
-            Id = newId,
-            ISBN = newISBN,
-            Title = model.Title,
-            Author = model.Author,
-            Category = model.Category,
-            UnitPrice = model.UnitPrice,
-            Quantity = model.Quantity,
-            MinStock = model.MinStock,
-            LastUpdatedAt = DateTime.Now
+            GenreId = genreId,
+            MinPrice = minPrice,
+            MaxPrice = maxPrice,
+            Books = bookViewModels
         };
-
-        _books.Add(book);
-
-        return book;
-    }
-
-    public List<string> GetAllCategories()
-    {
-        return _books
-            .Select(book => book.Category)
-            .Distinct()
-            .OrderBy(category => category)
-            .ToList();
     }
 }

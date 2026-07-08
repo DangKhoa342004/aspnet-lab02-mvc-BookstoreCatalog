@@ -8,7 +8,7 @@
             <th>Thể loại</th>
             <th>Giá bán</th>
             <th>Số lượng</th>
-            <th>Trạng thái</th>
+            <th>ISBN</th>
             <th>Chi tiết</th>
         </tr>
     </thead>
@@ -19,12 +19,10 @@
             <tr>
                 <td>@item.Title</td>
                 <td>@item.Author</td>
-                <td>@item.Category</td>
+                <td>@item.GenreName</td>
                 <td>@item.PriceText</td>
-                <td>@item.Quantity</td>
-                <td>
-                    <span class="@item.StockStatusClass">@item.StockStatus</span>
-                </td>
+                <td>@item.Stock</td>
+                <td>@item.ISBN</td>
                 <td>
                     <a asp-controller="Books"
                        asp-action="Detail"

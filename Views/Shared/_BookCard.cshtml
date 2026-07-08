@@ -8,11 +8,7 @@
     </p>
 
     <p class="book-meta">
-        ISBN: @Model.ISBN
-    </p>
-
-    <p class="book-meta">
-        Thể loại: @Model.Category
+        Thể loại: @Model.GenreName
     </p>
 
     <p class="book-price">
@@ -20,21 +16,12 @@
     </p>
 
     <p>
-        Số lượng: <strong>@Model.Quantity</strong>
+        Số lượng: <strong>@Model.Stock  </strong>
     </p>
 
-    @if (Model.StockStatus == "Hết hàng")
-    {
-        <span class="badge badge-danger">@Model.StockStatus</span>
-    }
-    else if (Model.StockStatus == "Cần bổ sung hàng")
-    {
-        <span class="badge badge-warning">@Model.StockStatus</span>
-    }
-    else
-    {
-        <span class="badge badge-success">@Model.StockStatus</span>
-    }
+    <p>
+        ISBN: <strong>@Model.ISBN</strong>
+    </p>
 
     <div class="card-actions">
         <a class="btn btn-light"

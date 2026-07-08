@@ -1,0 +1,48 @@
+@model List<BookstoreCatalog.Mvc.Models.Genre>
+
+@{
+    ViewData["Title"] = "Genre & Book Relationship";
+}
+
+<div class="container mt-4">
+    <h2 class="dashboard-title">Genre & Book Relationship</h2>
+
+    <table class="table relationship-table">
+        <thead>
+            <tr>
+                <th>Genre</th>
+                <th>Books</th>
+                <th>Relationship</th>
+                <th>DbSet</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var genre in Model)
+            {
+                <tr>
+                    <td class="font-weight-bold">@genre.Name</td>
+                    
+                    <td>
+                        @if (genre.Books != null && genre.Books.Any())
+                        {
+                            @string.Join(", ", genre.Books.Select(b => b.Title))
+                        }
+                        else
+                        {
+                            <span class="text-muted">No books</span>
+                        }
+                    </td>
+                    
+                    <td>1 - Many</td>
+                    
+                    <td>@(genre == Model.First() ? "Genres" : "Books")</td>
+                    
+                    <td>
+                        <a asp-controller="Books" asp-action="Details" asp-route-id="@genre.Id" class="text-primary text-decoration-none">View</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -3,69 +3,23 @@ namespace BookstoreCatalog.Mvc.ViewModels;
 public class BookDetailViewModel
 {
     public int Id { get; set; }
-
-    public string ISBN { get; set; } = "";
     
     public string Title { get; set; } = "";
 
     public string Author { get; set; } = "";
 
-    public string Category { get; set; } = "";
+    public string GenreName { get; set; } = "";
 
-    public decimal UnitPrice { get; set; }
+    public decimal Price { get; set; }
 
-    public int Quantity { get; set; }
+    public int Stock { get; set; }
 
-    public int MinStock { get; set; }
+    public string PriceText => $"{Price:N0} VND";
 
-    public DateTime LastUpdatedAt { get; set; }
-
-    public string PriceText => $"{UnitPrice:N0} VND";
-
-    public decimal InventoryValue => UnitPrice * Quantity;
+    public decimal InventoryValue => Price * Stock;
 
     public string InventoryValueText => $"{InventoryValue:N0} VND";
 
-    public string LastUpdatedText => LastUpdatedAt.ToString("dd/MM/yyyy HH:mm");
-
-    public string StockStatus
-    {
-        get
-        {
-            if (Quantity >= 15)
-            {
-                return "Hàng còn nhiều";
-            }
-
-            if (Quantity <= 0)
-            {
-                return "Hết hàng";
-            }
-
-            if (Quantity <= MinStock)
-            {
-                return "Cần bổ sung hàng";
-            }
-
-            return "Còn hàng";
-        }
-    }
-
-    public string ReorderSuggestion
-    {
-        get
-        {
-            if (Quantity <= 0)
-            {
-                return "Cần nhập hàng ngay vì sản phẩm đã hết.";
-            }
-
-            if (Quantity <= MinStock)
-            {
-                return $"Cần nhập thêm. Tồn kho hiện tại chỉ còn {Quantity}, mức tối thiểu là {MinStock}.";
-            }
-
-            return "Tồn kho đang ổn định, chưa cần nhập thêm.";
-        }
-    }
+    public bool IsLowStock { get; set; }
+    public string ISBN { get; set; } = string.Empty;
 }
