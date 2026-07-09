@@ -18,5 +18,5 @@ public class Book
 
     public ICollection<SaleItem>? SaleItems { get; set; } = new List<SaleItem>();
 
-    public string ISBN { get; set; } = string.Empty;
+    public string ISBN { get; set; } = string.Empty; 
 }

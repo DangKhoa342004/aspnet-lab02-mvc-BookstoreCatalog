@@ -21,5 +21,5 @@ public class BookDetailViewModel
     public string InventoryValueText => $"{InventoryValue:N0} VND";
 
     public bool IsLowStock { get; set; }
-    public string ISBN { get; set; } = string.Empty;
+    public string ISBN { get; set; } = string.Empty; 
 }
