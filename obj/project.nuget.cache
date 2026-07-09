@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "mqauVVlXX10=",
+  "dgSpecHash": "+iiN8UtfUmo=",
   "success": true,
-  "projectFilePath": "C:\\Users\\ASUS\\OneDrive\\Máy tính\\API_ASPNET\\Lab02_03_04\\bookstorecatalog.mvc\\BookstoreCatalog.Mvc.csproj",
+  "projectFilePath": "C:\\Users\\ASUS\\OneDrive\\Máy tính\\API_ASPNET\\Lab02_03_04\\bookstoreCatalog.mvc\\BookstoreCatalog.Mvc.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ASUS\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\azure.identity\\1.14.2\\azure.identity.1.14.2.nupkg.sha512",
