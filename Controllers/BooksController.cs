@@ -49,7 +49,7 @@ public class BooksController : Controller
     [HttpGet]
     public async Task<IActionResult> Filter(int? genreId, decimal? minPrice, decimal? maxPrice)
     {
-        var viewModel = await _bookService.GetFilteredBooksViewModelAsync(genreId, minPrice, maxPrice);
+        var viewModel = await _bookService.GetFilteredBooksViewModelAsync(genreId, minPrice, maxPrice); 
     
         return View(viewModel);
     }
