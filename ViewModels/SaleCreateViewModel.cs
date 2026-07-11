@@ -12,7 +12,7 @@ public class SaleCreateViewModel
     [Range(1, 5, ErrorMessage = "Vui lòng chọn một sản phẩm hợp lệ (1-5)")]
     public int BookId { get; set; }
 
-    [Required(ErrorMessage = "Số lượng không được để trống")]
-    [Range(0, 100, ErrorMessage = "Số lượng phải từ 0 đến 100")]
+    [Required(ErrorMessage = "Nhập số lượng phải mua")]
+    [Range(1, 100, ErrorMessage = "Số lượng phải từ 1 đến 100")]
     public int Quantity { get; set; }
 }

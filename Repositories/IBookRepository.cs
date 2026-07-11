@@ -11,4 +11,5 @@ public interface IBookRepository
     Task AddAsync(Book book);
     Task SaveChangesAsync();
     Task<List<Book>> GetFilteredBooksAsync(int? genreId, decimal? minPrice, decimal? maxPrice);
+    Task<List<Genre>> GetAllGenresReadOnlyAsync();
 }

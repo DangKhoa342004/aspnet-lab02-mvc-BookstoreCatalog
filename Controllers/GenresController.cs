@@ -15,10 +15,7 @@ public class GenresController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var genres = await _context.Genres
-                                       .Include(g => g.Books)
-                                       .AsNoTracking()
-                                       .ToListAsync();
+        var genres = await _context.Genres.Include(g => g.Books).AsNoTracking().ToListAsync();
 
         return View(genres);
     }

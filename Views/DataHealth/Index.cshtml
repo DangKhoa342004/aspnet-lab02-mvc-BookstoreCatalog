@@ -4,34 +4,51 @@
     ViewData["Title"] = "EF Core Data Health";
 }
 
-<div class="container mt-4">
-    <h2 class="dashboard-title">EF Core Data Health</h2>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-dark text-white fw-bold">
+                1. Check Database Connection
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Connection status
+                    @if (Model.CanConnectToDatabase)
+                    {
+                        <span class="badge bg-success rounded-pill px-3 py-2">Thành công</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger rounded-pill px-3 py-2">Thất bại</span>
+                    }
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Provider
+                    <span class="badge bg-info text-dark rounded-pill px-3 py-2">@Model.DatabaseProvider</span>
+                </li>
+            </ul>
+        </div>
+    </div>
 
-    <table class="table relationship-table">
-        <thead>
-            <tr>
-                <th>Check</th>
-                <th>Expected</th>
-                <th>Actual</th>
-                <th>Status</th>
-                <th>Note</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Items)
-            {
-                <tr>
-                    <td class="font-weight-bold">@item.Check</td>
-                    <td>@item.Expected</td>
-                    <td>@item.Actual</td>
-                    <td>
-                        <span class="badge @(item.Status == "OK" ? "badge-success-custom" : "badge-danger-custom")">
-                            @item.Status
-                        </span>
-                    </td>
-                    <td>@item.Note</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="col-md-6">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-dark text-white fw-bold">
+                2. Check Seed Data & Migration
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Tổng số Danh mục:
+                    <span class="badge bg-primary rounded-pill">@Model.TotalGenres</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Tổng số Sách (Books):
+                    <span class="badge bg-primary rounded-pill">@Model.TotalBooks</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Tổng số Đơn bán hàng (Sales):
+                    <span class="badge bg-warning text-dark rounded-pill">@Model.TotalSales</span>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>

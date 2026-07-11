@@ -20,7 +20,9 @@ public class SaleRepository : ISaleRepository
 		=> _context.Sales
 				   .Include(s => s.SaleItems)
 					   .ThenInclude(si => si.Book)
-				   .ToListAsync();
+				   .ToListAsync()
+				   .OrderByDescending(s => s.CreatedAt)
+        			.ToListAsync();
 
 	public Task<List<Sale>> GetAllReadOnlyAsync()
         => _context.Sales
@@ -40,42 +42,4 @@ public class SaleRepository : ISaleRepository
 
 	public Task SaveChangesAsync()
 		=> _context.SaveChangesAsync();
-
-	public async Task CreateSaleAsync(SaleCreateViewModel model)
-	{
-    	await using var transaction = await _context.Database.BeginTransactionAsync();
-    	try
-    	{
-        	var book = await _context.Books.FirstOrDefaultAsync(p => p.Id == model.BookId);
-        	if (book == null) throw new Exception("Book not found");
-        	if (book.Stock < model.Quantity) throw new Exception("Not enough stock");
-
-        	var sale = new Sale
-        	{
-				CustomerName = model.CustomerName,
-            	CreatedAt = DateTime.Now,
-            	TotalAmount = book.Price * model.Quantity
-        	};
-        	_context.Sales.Add(sale);
-            await _context.SaveChangesAsync();
-
-        	var item = new SaleItem
-        	{
-            	SaleId = sale.Id,
-            	BookId = book.Id,
-            	Quantity = model.Quantity,
-            	UnitPrice = book.Price
-        	};
-        	_context.SaleItems.Add(item);
-        	book.Stock -= model.Quantity;
-
-        	await _context.SaveChangesAsync();
-        	await transaction.CommitAsync();
-    	}
-    	catch
-    	{
-        	await transaction.RollbackAsync();
-        	throw;
-    	}
-	}
 }

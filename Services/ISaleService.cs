@@ -8,7 +8,5 @@ public interface ISaleService
 {
 	Task<List<Sale>> GetAllAsync();
 	Task<Sale?> GetByIdAsync(int id);
-	Task CreateAsync(Sale sale);
 	Task CreateSaleAsync(SaleCreateViewModel model);
-
 }

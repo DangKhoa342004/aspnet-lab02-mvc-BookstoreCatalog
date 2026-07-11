@@ -10,5 +10,5 @@ public class Sale
     public decimal TotalAmount { get; set; }
     public string CustomerName { get; set; } = "";
     public Customer? Customer { get; set; }
-    public ICollection<SaleItem> SaleItems { get; set; } = new List<SaleItem>();
+    public virtual ICollection<SaleItem> SaleItems { get; set; } = new List<SaleItem>();
 }

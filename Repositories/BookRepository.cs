@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using BookstoreCatalog.Mvc.Data;
 using BookstoreCatalog.Mvc.Models;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 namespace BookstoreCatalog.Mvc.Repositories;
@@ -28,13 +28,13 @@ public class BookRepository : IBookRepository
     public Task SaveChangesAsync()
         => _context.SaveChangesAsync();
 
+    public Task<List<Genre>> GetAllGenresReadOnlyAsync()
+        => _context.Genres.AsNoTracking().ToListAsync();
+
     public async Task<List<Book>> GetFilteredBooksAsync(int? genreId, decimal? minPrice, decimal? maxPrice)
     {
     
-        var query = _context.Books
-                        .Include(b => b.Genre) 
-                        .AsNoTracking();
-
+        var query = _context.Books.Include(b => b.Genre).AsNoTracking().AsQueryable();
     
         if (genreId.HasValue)
         {

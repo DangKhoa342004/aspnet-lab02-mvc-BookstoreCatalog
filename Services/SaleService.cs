@@ -24,11 +24,41 @@ public class SaleService : ISaleService
 	public Task<Sale?> GetByIdAsync(int id)
 		=> _saleRepository.GetByIdAsync(id);
 
-	public Task CreateAsync(Sale sale)
-		=> _saleRepository.AddAsync(sale);
-
-	public Task CreateSaleAsync(SaleCreateViewModel model)
+	public async Task CreateSaleAsync(SaleCreateViewModel model)
 	{
-    	return _saleRepository.CreateSaleAsync(model);
+    	await using var transaction = await _context.Database.BeginTransactionAsync();
+    	try
+    	{
+        	var book = await _context.Books.FirstOrDefaultAsync(p => p.Id == model.BookId);
+        	if (book == null) throw new Exception("Book not found");
+        	if (book.Stock < model.Quantity) throw new Exception("Not enough stock");
+
+        	var sale = new Sale
+        	{
+				CustomerName = model.CustomerName,
+            	CreatedAt = DateTime.Now,
+            	TotalAmount = book.Price * model.Quantity
+        	};
+        	_context.Sales.Add(sale);
+            await _context.SaveChangesAsync();
+
+        	var item = new SaleItem
+        	{
+            	SaleId = sale.Id,
+            	BookId = book.Id,
+            	Quantity = model.Quantity,
+            	UnitPrice = book.Price
+        	};
+        	_context.SaleItems.Add(item);
+        	book.Stock -= model.Quantity;
+
+        	await _context.SaveChangesAsync();
+        	await transaction.CommitAsync();
+    	}
+    	catch
+    	{
+        	await transaction.RollbackAsync();
+        	throw;
+    	}
 	}
 }

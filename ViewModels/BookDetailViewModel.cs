@@ -6,6 +6,8 @@ public class BookDetailViewModel
     
     public string Title { get; set; } = "";
 
+    public string ISBN { get; set; } = string.Empty; 
+
     public string Author { get; set; } = "";
 
     public string GenreName { get; set; } = "";
@@ -21,5 +23,8 @@ public class BookDetailViewModel
     public string InventoryValueText => $"{InventoryValue:N0} VND";
 
     public bool IsLowStock { get; set; }
-    public string ISBN { get; set; } = string.Empty; 
+
+    public string Suggestion => Quantity <= MinStock 
+        ? "Cần nhập thêm sách này để đảm bảo vận hành." 
+        : "Số lượng sách đang đủ dùng.";
 }

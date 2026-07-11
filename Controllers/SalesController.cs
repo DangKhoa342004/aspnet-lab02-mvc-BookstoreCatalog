@@ -1,17 +1,19 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using BookstoreCatalog.Mvc.Services;
+using BookstoreCatalog.Mvc.Repositories;
 using BookstoreCatalog.Mvc.ViewModels;
-using System;
-using System.Threading.Tasks;
 
 namespace BookstoreCatalog.Mvc.Controllers;
 
 public class SalesController : Controller
 {
     private readonly ISaleService _saleService;
-    public SalesController(ISaleService saleService)
+    private readonly IBookRepository _bookRepository;
+    public SalesController(ISaleService saleService, IBookRepository bookRepository)
     {
         _saleService = saleService;
+        _bookRepository = bookRepository;
     }
 
     [HttpGet]
@@ -22,8 +24,10 @@ public class SalesController : Controller
     }
 
    [HttpGet]
-    public IActionResult Create()
+    public async Task<IActionResult> Create()
     {
+        var books = await _bookRepository.GetAllReadOnlyAsync();
+        ViewBag.BookList = new SelectList(books, "Id", "Title");
         return View();
     }
 
@@ -33,6 +37,8 @@ public class SalesController : Controller
     {
         if (!ModelState.IsValid)
         {
+            var equipments = await _equipmentRepository.GetAllReadOnlyAsync();
+            ViewBag.EquipmentList = new SelectList(equipments, "Id", "Name");
             return View(model);
         }
 
@@ -41,14 +47,15 @@ public class SalesController : Controller
             await _saleService.CreateSaleAsync(model);
 
             TempData["SuccessMessage"] = "Tạo đơn hàng bán sách thành công!";
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Books");
         }
         catch (Exception ex)
         {
-            string realError = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
-    
-            ModelState.AddModelError("", "Chi tiết lỗi: " + realError);
-    
+            ModelState.AddModelError("", ex.Message);
+
+            var books = await _bookRepository.GetAllReadOnlyAsync();
+            ViewBag.BookList = new SelectList(books, "Id", "Title");
+
             return View(model);
         }
     }
