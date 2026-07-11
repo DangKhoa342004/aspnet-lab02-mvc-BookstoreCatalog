@@ -1,16 +1,11 @@
-@* @model BookCreateViewModel
+@model BookCreateViewModel
 
 @{
     ViewData["Title"] = "Create Book";
 }
 
 <div class="page-header">
-    <div>
-        <h2 class="page-title">Create Book</h2>
-        <p class="page-description">
-            Form POST dùng asp-for để bind dữ liệu vào BookCreateViewModel.
-        </p>
-    </div>
+    <h2 class="page-title">Create Book</h2>
 
     <a class="btn btn-light"
        asp-controller="Books"
@@ -38,6 +33,14 @@
         </div>
 
         <div class="form-group">
+            <label asp-for="Author">ISBN</label>
+            <input asp-for="Author"
+                   class="form-control"
+                   placeholder="Ví dụ: 978-012-45-7812-9" />
+            <span asp-validation-for="Author" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
             <label asp-for="Author">Tác giả</label>
             <input asp-for="Author"
                    class="form-control"
@@ -46,11 +49,11 @@
         </div>
 
         <div class="form-group">
-            <label asp-for="Category">Thể loại</label>
-            <input asp-for="Category"
+            <label asp-for="CategoryId">Mã Thể loại</label>
+            <input asp-for="CategoryId"
                    class="form-control"
-                   placeholder="Ví dụ: Romance, Action, Mystery" />
-            <span asp-validation-for="Category" class="text-danger"></span>
+                   placeholder="Ví dụ: 1, 2, 3,..." />
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
         </div>
 
         <div class="form-group">
@@ -87,28 +90,10 @@
             Back to List
         </a>
     </form>
-
-    <div class="info-box">
-        <h3>Model Binding từ Form POST</h3>
-
-        <p>
-            Khi bấm Save, ASP.NET Core sẽ đọc các input trong form
-            và tự map vào BookCreateViewModel.
-        </p>
-
-        <p>
-            Ví dụ input có <strong>asp-for="Title"</strong>
-            thì dữ liệu sẽ được bind vào property <strong>Title</strong>.
-        </p>
-
-        <p>
-            Nếu tên input không khớp với property, action có thể nhận null hoặc giá trị mặc định.
-        </p>
-    </div>
 </div>
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-} *@
+}

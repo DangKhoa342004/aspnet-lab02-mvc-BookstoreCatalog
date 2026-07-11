@@ -1,4 +1,4 @@
-@model List<BookListViewModel>
+@model List<BookstoreCatalog.Mvc.ViewModels.BookListViewModel>
 
 @{
     ViewData["Title"] = "Book Catalog";
@@ -22,11 +22,9 @@
     </div>
 
     <div>
-        <a class="btn btn-secondary"
-           asp-controller="Books"
-           asp-action="Filter">
-            Filter Book
-        </a>
+        <a class="btn btn-secondary" asp-controller="Books" asp-action="Search"> Search Book</a>
+
+        <a class="btn btn-warning" asp-controller="Books" asp-action="Create"> Add New Book</a>
     </div>
     
 </div>

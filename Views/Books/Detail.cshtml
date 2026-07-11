@@ -2,6 +2,16 @@
 
 @{
     ViewData["Title"] = "Book Detail";
+
+    string suggestion = "Tồn kho đầy đủ.";
+    if (Model.Quantity == 0)
+    {
+        suggestion = "Hết hàng! Cần nhập thêm ngay lập tức.";
+    }
+    else if (Model.Quantity <= Model.MinStock)
+    {
+        suggestion = "Hàng sắp hết (dưới hạn mức tối thiểu). Hãy lên kế hoạch đặt hàng.";
+    }
 }
 
 <div class="page-header">
@@ -60,18 +70,26 @@
             </tr>
 
             <tr>
-                <th>Trạng thái</th>
-                <td>
-                    @if (Model.IsLowStock)
-                    {
-                        <span class="badge bg-danger">Sắp hết hàng</span>
-                    }
-                    else
-                    {
-                        <span class="badge bg-success">Còn đủ hàng</span>
-                    }
-                </td>
+                <div class="alert alert-secondary mt-3">
+                    <strong>Suggestion:</strong> @suggestion
+                </div>
             </tr>
         </table>
+
+        <div class="d-flex gap-2 mt-4">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning fw-bold">
+                <i class="bi bi-pencil-square"></i> Edit
+            </a>
+            
+            <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+                <button type="submit" class="btn btn-danger fw-bold" onclick="return confirm('Bạn có chắc chắn muốn xóa (đưa vào thùng rác) dụng cụ này?');">
+                    <i class="bi bi-trash"></i> Delete
+                </button>
+            </form>
+
+            <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+            
+            <a asp-action="AdjustStock" asp-route-id="@Model.Id" class="btn btn-info text-white fw-bold">Kiểm Kho</a>
+        </div>
     </div>
 </div>
