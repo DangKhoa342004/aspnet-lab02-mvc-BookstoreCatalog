@@ -7,18 +7,8 @@
 
 <div class="page-header">
     <div>
-        <h2 class="dashboard-title">Data Layer Dashboard</h2>
-        <div class="flow-steps">
-            <div class="step-card">Controller</div>
-            <div class="flow-arrow">&rarr;</div>
-            <div class="step-card">Service</div>
-            <div class="flow-arrow">&rarr;</div>
-            <div class="step-card">Repository</div>
-            <div class="flow-arrow">&rarr;</div>
-            <div class="step-card">DbContext</div>
-            <div class="flow-arrow">&rarr;</div>
-            <div class="step-card">Database</div>
-        </div>
+        <h2 class="page-title text-primary fw-bold">Book List</h2>
+        <p class="page-description text-muted">Giao diện danh sách (Chỉ hiển thị các sản phẩm đang hoạt động).</p>
     </div>
 
     <div>
@@ -42,7 +32,9 @@
 
 @if (Model.Count == 0)
 {
-    <p>Chưa có sách nào trong hệ thống.</p>
+    <div class="alert alert-warning text-center fw-bold shadow-sm">
+        Kho đang trống hoặc tất cả sách đã bị đưa vào thùng rác.
+    </div>
 }
 else
 {
@@ -53,3 +45,4 @@ else
         }
     </div>
 }
+

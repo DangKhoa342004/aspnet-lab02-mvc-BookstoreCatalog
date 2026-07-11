@@ -68,7 +68,8 @@ public class BookService : IBookService
             books = books.Where(b => 
                 b.Title.Contains(keyword, StringComparison.OrdinalIgnoreCase) || 
                 b.Author.Contains(keyword, StringComparison.OrdinalIgnoreCase) || 
-                b.ISBN.Contains(keyword, StringComparison.OrdinalIgnoreCase)).ToList();
+                b.ISBN.Contains(keyword, StringComparison.OrdinalIgnoreCase)) ||
+                b.Genre?.Name.Contains(keyword, StringComparison.OrdinalIgnoreCase).ToList();
         }
         var genres = await _bookRepository.GetAllGenresReadOnlyAsync();
 
@@ -107,7 +108,8 @@ public class BookService : IBookService
         {
             TotalItems = books.Count,
             OutOfStockCount = books.Count(b => b.Quantity == 0),
-            LowStockCount = books.Count(b => b.Quantity > 0 && b.Quantity <= b.MinStock)
+            LowStockCount = books.Count(b => b.Quantity > 0 && b.Quantity <= b.MinStock),
+            TotalInventoryValue = books.Sum(b => b.Price * b.Quantity)
         };
     }
 

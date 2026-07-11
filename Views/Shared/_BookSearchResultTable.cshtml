@@ -10,6 +10,7 @@
             <th>Số lượng</th>
             <th>ISBN</th>
             <th>Chi tiết</th>
+            <th>Trạng thái</th>
         </tr>
     </thead>
 
@@ -30,6 +31,16 @@
                         Xem
                     </a>
                 </td>
+                <li class="mt-2"> 
+                    @if(item.Status == "Sắp hết" || item.Status == "Hết hàng")
+                    {
+                        <span class="badge bg-warning text-dark">@item.Status</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success">@item.Status</span>
+                    }
+                </li>
             </tr>
         }
     </tbody>
