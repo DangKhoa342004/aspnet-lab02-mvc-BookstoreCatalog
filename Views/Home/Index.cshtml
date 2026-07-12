@@ -2,41 +2,52 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<h2 class="fw-bold mb-4">Admin Dashboard</h2>
+<div class="contrainer mt-4">
+    <h2 class="fw-bold mb-4">Admin Dashboard</h2>
 
-<div class="row text-white">
-    <div class="col-md-4 mb-3">
-        <div class="card bg-primary shadow h-100 p-3">
-            <h5 class="card-title">Books</h5>
-            <h1 class="display-4 fw-bold">@ViewBag.Total</h1>
-            <small>All Books</small>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3 mb-5">
+        <div class="col-md-4 mb-3">
+            <div class="card border-0 text-white p-3 rounded-3" style="background-color: #1e62eb;">
+                <h5 class="card-title">Books</h5>
+                <h1 class="display-4 fw-bold">@ViewBag.Total</h1>
+                <small>All Books</small>
+            </div>
         </div>
-    </div>
     
-    <div class="col-md-4 mb-3">
-        <div class="card bg-success shadow h-100 p-3">
-            <h5 class="card-title">Active</h5>
-            <h1 class="display-4 fw-bold">@ViewBag.Active</h1>
-            <small>IsDeleted = false</small>
+        <div class="col-md-4 mb-3">
+            <div class="card border-0 text-white p-3 rounded-3" style="background-color: #198754;">
+                <h5 class="card-title">Active</h5>
+                <h1 class="display-4 fw-bold">@ViewBag.Active</h1>
+                <small>IsDeleted = false</small>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card border-0 text-white p-3 rounded-3" style="background-color: #e65c00;">
+                <h5 class="card-title">Deleted</h5>
+                <h1 class="display-4 fw-bold">@ViewBag.Deleted</h1>
+                <small>In Trash</small>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card border-0 text-white p-3 rounded-3" style="background-color: #7a22cf;">
+                <div class="card-title">Logs Today</div>
+                <div class="display-4 fw-bold">@ViewBag.Logs</div>
+                <small>Serilog entries</small>
+            </div>
         </div>
     </div>
 
-    <div class="col-md-4 mb-3">
-        <div class="card bg-danger shadow h-100 p-3">
-            <h5 class="card-title">Deleted</h5>
-            <h1 class="display-4 fw-bold">@ViewBag.Deleted</h1>
-            <small>In Trash</small>
+    <div class="card shadow-sm mt-4 p-4">
+        <h4 class="fw-bold text-secondary">Quick Links</h4>
+        <div class="d-flex flex-wrap gap-2 mt-3">
+            <a asp-controller="Books" asp-action="Index" class="btn btn-outline-primary">Books List</a>
+            <a asp-controller="Books" asp-action="Create" class="btn btn-outline-info">Create Book</a>
+            <a asp-controller="Books" asp-action="Trash" class="btn btn-outline-danger">Trash (Deleted)</a>
+            <a asp-controller="AuditLogs" asp-action="Index" class="btn btn-outline-primary">Audit Logs</a>
+            <a href="/health/ready" class="btn btn-outline-success" target="_blank">Health Check</a>
+            <a href="/api/books/9999" class="btn btn-outline-warning" target="_blank">API DOCs</a>
         </div>
-    </div>
-</div>
-
-<div class="card shadow-sm mt-4 p-4">
-    <h4 class="fw-bold text-secondary">Quick Links</h4>
-    <div class="d-flex flex-wrap gap-2 mt-3">
-        <a asp-controller="Books" asp-action="Index" class="btn btn-outline-primary">Books List</a>
-        <a asp-controller="Books" asp-action="Create" class="btn btn-outline-info">Create Book</a>
-        <a asp-controller="Books" asp-action="Trash" class="btn btn-outline-danger">Trash (Deleted)</a>
-        <a href="/health/ready" class="btn btn-outline-success" target="_blank">Health Check</a>
-        <a href="/api/books/9999" class="btn btn-outline-warning" target="_blank">API DOCs</a>
     </div>
 </div>

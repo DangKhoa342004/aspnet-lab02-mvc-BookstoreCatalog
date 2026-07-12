@@ -31,7 +31,7 @@ public class SaleService : ISaleService
     	{
         	var book = await _context.Books.FirstOrDefaultAsync(p => p.Id == model.BookId);
         	if (book == null) throw new Exception("Book not found");
-        	if (book.Stock < model.Quantity) throw new Exception("Not enough stock");
+        	if (book.Quantity < model.Quantity) throw new Exception("Not enough stock");
 
         	var sale = new Sale
         	{
@@ -50,7 +50,7 @@ public class SaleService : ISaleService
             	UnitPrice = book.Price
         	};
         	_context.SaleItems.Add(item);
-        	book.Stock -= model.Quantity;
+        	book.Quantity -= model.Quantity;
 
         	await _context.SaveChangesAsync();
         	await transaction.CommitAsync();

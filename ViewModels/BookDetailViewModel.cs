@@ -14,11 +14,13 @@ public class BookDetailViewModel
 
     public decimal Price { get; set; }
 
-    public int Stock { get; set; }
+    public int Quantity { get; set; }
+
+    public int MinStock{ get; set; }
 
     public string PriceText => $"{Price:N0} VND";
 
-    public decimal InventoryValue => Price * Stock;
+    public decimal InventoryValue => Price * Quantity;
 
     public string InventoryValueText => $"{InventoryValue:N0} VND";
 

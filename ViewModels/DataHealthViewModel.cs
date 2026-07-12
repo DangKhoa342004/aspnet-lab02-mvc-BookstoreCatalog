@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace BookstoreCatalog.Mvc.ViewModels;
 
-public class HealthCheckItem
+public class DataHealthViewModel
 {
     public bool CanConnectToDatabase { get; set; }
     public int TotalBooks { get; set; }

@@ -5,17 +5,17 @@ public interface IBookService
 {
     Task<List<BookListViewModel>> GetBookListAsync();
     Task<BookDetailViewModel?> GetBookDetailAsync(int id);
-    Task<BookFilterViewModel> GetFilteredBooksViewModelAsync(int? genreId, decimal? minPrice, decimal? maxPrice);
+    Task<BookFilterViewModel> GetFilteredBooksViewModelAsync(string? keyword, int? genreId, decimal? minPrice, decimal? maxPrice);
 
-    Task<Book> GetByIdAsync(int id);
-    Task<BookStatsViewModel> GetBookStatsAsync(int id);
-    Task CreateAsync(Book book);
+    Task<Book?> GetByIdAsync(int id);
+    Task<BookStatsViewModel> GetBookStatsAsync();
+    Task CreateAsync(BookCreateViewModel model);
 
     // Kiem tra ISBN doc nhat
-    Task<bool> IsISBNUniqueAsync(string isbn, int? excludeBookId = null);
+    Task<bool> IsISBNUniqueAsync(string isbn, int? excludeId = null);
 
     // Edit book
-    Task<BookEditViewModel> GetBookForEditAsync(int id);
+    Task<BookEditViewModel?> GetBookForEditAsync(int id);
     Task UpdateBookAsync(BookEditViewModel model);
 
     // Delete and Restore book

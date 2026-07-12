@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = "API Error - ProblemDetails";
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold mb-4 text-dark">API Error Example - ProblemDetails 404</h2>
+
+    <!-- Khung card chứa mã JSON lỗi -->
+    <div class="card shadow-sm border-light p-4 rounded-3 bg-white">
+        <pre class="mb-0 font-monospace fs-6" style="color: #b11d5c; white-space: pre-wrap; line-height: 1.6;">{
+                "type": "https://example.com/problems/book-not-found",
+                "title": "Book not found",
+                "status": 404,
+                "detail": "The book with id @ViewBag.BookId was not found.",
+                "instance": "/api/books/@ViewBag.BookId",
+                "traceId": "@ViewBag.TraceId"
+            }</pre>
+    </div>
+</div>

@@ -43,7 +43,19 @@ public class BookService : IBookService
     public async Task<BookDetailViewModel?> GetBookDetailAsync(int id)
     {
         var book = await _bookRepository.GetByIdAsync(id);
-        if (book == null) return null;
+        if (book == null)
+        {
+            _logger.LogError("Invalid request: BookId={BookId}", id);
+            var log = new AuditLogs
+            {
+                Level = "Error",
+                Message = $"Invalid request: ProductId={id} TraceId={Guid.NewGuid().ToString().Substring(0, 8).ToUpper()}",
+                Time = DateTime.Now
+            };
+            _context.AuditLogs.Add(log);
+            await _context.SaveChangesAsync();
+            return null;
+        }
 
         return new BookDetailViewModel
         {
@@ -53,23 +65,23 @@ public class BookService : IBookService
             Author = book.Author,
             Price = book.Price,
             Quantity = book.Quantity,
+            MinStock = book.MinStock,
             GenreName = book.Genre != null ? book.Genre.Name : "N/A",
             IsLowStock = book.Quantity < _settings.LowStockThreshold && book.Quantity > 0
         };
     }
 
-    public async Task<BookFilterViewModel> GetFilteredBooksViewModelAsync(int? genreId, decimal? minPrice, decimal? maxPrice, string? keyword)
+    public async Task<BookFilterViewModel> GetFilteredBooksViewModelAsync(string? keyword, int? genreId, decimal? minPrice, decimal? maxPrice)
     {
         var books = await _bookRepository.GetFilteredBooksAsync(genreId, minPrice, maxPrice);
 
-        // 2. Bổ sung tính năng tìm kiếm bằng keyword giống bên Equipment
         if (!string.IsNullOrWhiteSpace(keyword))
         {
             books = books.Where(b => 
                 b.Title.Contains(keyword, StringComparison.OrdinalIgnoreCase) || 
                 b.Author.Contains(keyword, StringComparison.OrdinalIgnoreCase) || 
-                b.ISBN.Contains(keyword, StringComparison.OrdinalIgnoreCase)) ||
-                b.Genre?.Name.Contains(keyword, StringComparison.OrdinalIgnoreCase).ToList();
+                b.ISBN.Contains(keyword, StringComparison.OrdinalIgnoreCase) ||
+                (b.Genre != null && b.Genre.Name.Contains(keyword, StringComparison.OrdinalIgnoreCase))).ToList();
         }
         var genres = await _bookRepository.GetAllGenresReadOnlyAsync();
 
@@ -87,7 +99,6 @@ public class BookService : IBookService
 
         return new BookFilterViewModel
         {
-            Genres = genres,
             GenreId = genreId,
             MinPrice = minPrice,
             MaxPrice = maxPrice,
@@ -101,7 +112,7 @@ public class BookService : IBookService
         return await _bookRepository.GetByIdAsync(id);
     }
 
-    public async Task<BookStatsViewModel> GetStatsAsync()
+    public async Task<BookStatsViewModel> GetBookStatsAsync()
         {
         var books = await _bookRepository.GetAllReadOnlyAsync();
         return new BookStatsViewModel
@@ -122,18 +133,28 @@ public class BookService : IBookService
 
         var newBook = new Book
         {
-            Code = $"978-604-{random1}-{random2}-{random3}",
-            Name = model.Name, 
-            Brand = model.Brand, 
+            ISBN = $"978-604-{random1}-{random2}-{random3}",
+            Title = model.Title, 
+            Author = model.Author, 
             Price = model.Price, 
             Quantity = model.Quantity, 
             MinStock = model.MinStock, 
             UpdatedAt = DateTime.Now,
-            CategoryId = 1
+            GenreId = model.GenreId
         };
 
         await _bookRepository.AddAsync(newBook);
         await _bookRepository.SaveChangesAsync();
+
+        _logger.LogInformation("Book created. BookId={BookId}", newBook.Id);
+        var log = new AuditLogs
+            {
+                Level = "Information",
+                Message = $"Product created. ProductId={newBook.Id}",
+                Time = DateTime.Now
+            };
+        _context.AuditLogs.Add(log);
+        await _context.SaveChangesAsync();
     }
 
 
@@ -155,7 +176,7 @@ public class BookService : IBookService
         return new BookEditViewModel
         {
             Id = book.Id,
-            Name = book.Name,
+            Title = book.Title,
             ISBN = book.ISBN,
             Author = book.Author,
             Price = book.Price,
@@ -189,15 +210,20 @@ public class BookService : IBookService
         book.Price = model.Price;
         book.Quantity = model.Quantity;
         book.MinStock = model.MinStock;
-        book.CategoryId = model.CategoryId;
+        book.GenreId = model.GenreId;
         book.UpdatedAt = DateTime.Now;
 
         await _context.SaveChangesAsync();
-    
-        // RowVersion Update
-        await _context.Database.ExecuteSqlRawAsync("UPDATE Books SET RowVersion = randomblob(16) WHERE Id = {0}", book.Id);
-        
+            
         _logger.LogInformation("Đã cập nhật sách. ID={BookId}", model.Id);
+        var log = new AuditLogs
+        {
+            Level = "Information",
+            Message = $"Product updated. ProductId={model.Id}",
+            Time = DateTime.Now
+        };
+        _context.AuditLogs.Add(log);
+        await _context.SaveChangesAsync();
     }
 
     public async Task<bool> SoftDeleteAsync(int id)
@@ -211,18 +237,27 @@ public class BookService : IBookService
 
         await _context.SaveChangesAsync();
         _logger.LogWarning("Đã xóa mềm sách. ID={BookId}", id);
+        var log = new AuditLogs
+        {
+            Level = "Warning",
+            Message = $"Product soft deleted. ProductId={id}",
+            Time = DateTime.Now
+        };
+        _context.AuditLogs.Add(log);
+        await _context.SaveChangesAsync();
+
         return true;
     }
 
-    public async Task<List<BookTrashItemViewModel>> GetTrashAsync()
+    public async Task<List<BookTrashItemViewModel>> GetTrashItemsAsync()
     {
         return await _context.Books.IgnoreQueryFilters()
             .Where(b => b.IsDeleted).AsNoTracking()
             .Select(e => new BookTrashItemViewModel
             {
                 Id = e.Id,
-                Name = e.Name,
-                Code = e.Code,
+                Title = e.Title,
+                ISBN = e.ISBN,
                 DeletedAt = e.DeletedAt
             }).ToListAsync();
     }
@@ -240,6 +275,15 @@ public class BookService : IBookService
 
         await _context.SaveChangesAsync();
         _logger.LogInformation("Đã khôi phục sách. ID={BookId}", id);
+        var log = new AuditLogs
+        {
+            Level = "Information",
+            Message = $"Product restored. ProductId={id}",
+            Time = DateTime.Now
+        };
+        _context.AuditLogs.Add(log);
+        await _context.SaveChangesAsync();
+
         return true;
     }
 
@@ -275,9 +319,6 @@ public class BookService : IBookService
         book.UpdatedAt = DateTime.Now;
 
         await _context.SaveChangesAsync();
-
-        // Raw SQL to update RowVersion
-        await _context.Database.ExecuteSqlRawAsync("UPDATE Books SET RowVersion = randomblob(16) WHERE Id = {0}", book.Id);
 
         _logger.LogInformation("Đã điều chỉnh tồn kho. ID={BookId}, NewQty={Quantity}", model.Id, model.Quantity);
     }

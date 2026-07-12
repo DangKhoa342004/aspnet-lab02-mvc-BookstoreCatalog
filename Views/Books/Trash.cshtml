@@ -1,4 +1,4 @@
-@model List<BookstoreCatalog.Mvc.ViewModels.EquipmentTrashItemViewModel>
+@model List<BookstoreCatalog.Mvc.ViewModels.BookTrashItemViewModel>
 
 @{
     ViewData["Title"] = "Trash";
@@ -34,8 +34,8 @@ else
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td class="fw-bold">@item.Code</td>
-                        <td>@item.Name</td>
+                        <td class="fw-bold">@item.ISBN</td>
+                        <td>@item.Title</td>
                         <td>@item.DeletedAt?.ToString("dd/MM/yyyy HH:mm:ss")</td>
                         <td>
                             <form asp-action="Restore" asp-route-id="@item.Id" method="post" style="display:inline;">

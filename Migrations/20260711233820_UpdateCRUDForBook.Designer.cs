@@ -4,6 +4,7 @@ using BookstoreCatalog.Mvc.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookstoreCatalog.Mvc.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260711233820_UpdateCRUDForBook")]
+    partial class UpdateCRUDForBook
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,30 +24,6 @@ namespace BookstoreCatalog.Mvc.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("BookstoreCatalog.Mvc.Models.AuditLogs", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Level")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AuditLogs");
-                });
 
             modelBuilder.Entity("BookstoreCatalog.Mvc.Models.Book", b =>
                 {
@@ -112,7 +91,7 @@ namespace BookstoreCatalog.Mvc.Migrations
                             GenreId = 3,
                             ISBN = "893-528-09-1926-6",
                             IsDeleted = false,
-                            MinStock = 3,
+                            MinStock = 0,
                             Price = 130000m,
                             Quantity = 10,
                             RowVersion = new byte[0],
@@ -126,7 +105,7 @@ namespace BookstoreCatalog.Mvc.Migrations
                             GenreId = 1,
                             ISBN = "978-604-55-9835-1",
                             IsDeleted = false,
-                            MinStock = 4,
+                            MinStock = 0,
                             Price = 320000m,
                             Quantity = 15,
                             RowVersion = new byte[0],
@@ -140,7 +119,7 @@ namespace BookstoreCatalog.Mvc.Migrations
                             GenreId = 2,
                             ISBN = "978-604-48-0995-3",
                             IsDeleted = false,
-                            MinStock = 4,
+                            MinStock = 0,
                             Price = 200000m,
                             Quantity = 21,
                             RowVersion = new byte[0],
@@ -154,7 +133,7 @@ namespace BookstoreCatalog.Mvc.Migrations
                             GenreId = 1,
                             ISBN = "978-604-38-2862-7",
                             IsDeleted = false,
-                            MinStock = 6,
+                            MinStock = 0,
                             Price = 1500000m,
                             Quantity = 7,
                             RowVersion = new byte[0],
@@ -168,7 +147,7 @@ namespace BookstoreCatalog.Mvc.Migrations
                             GenreId = 3,
                             ISBN = "978-604-31-9970-3",
                             IsDeleted = false,
-                            MinStock = 10,
+                            MinStock = 0,
                             Price = 90000m,
                             Quantity = 3,
                             RowVersion = new byte[0],

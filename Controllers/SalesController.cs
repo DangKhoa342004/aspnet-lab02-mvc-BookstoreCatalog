@@ -37,8 +37,8 @@ public class SalesController : Controller
     {
         if (!ModelState.IsValid)
         {
-            var equipments = await _equipmentRepository.GetAllReadOnlyAsync();
-            ViewBag.EquipmentList = new SelectList(equipments, "Id", "Name");
+            var books = await _bookRepository.GetAllReadOnlyAsync();
+            ViewBag.BookList = new SelectList(books, "Id", "Name");
             return View(model);
         }
 

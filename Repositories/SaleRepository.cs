@@ -20,7 +20,6 @@ public class SaleRepository : ISaleRepository
 		=> _context.Sales
 				   .Include(s => s.SaleItems)
 					   .ThenInclude(si => si.Book)
-				   .ToListAsync()
 				   .OrderByDescending(s => s.CreatedAt)
         			.ToListAsync();
 
