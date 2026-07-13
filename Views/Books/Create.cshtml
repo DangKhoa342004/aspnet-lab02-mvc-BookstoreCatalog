@@ -22,7 +22,7 @@
 
         @Html.AntiForgeryToken()
 
-        <div asp-validation-summary="All"></div>
+        <div asp-validation-summary="ModelOnly"></div>
 
         <div class="form-group">
             <label asp-for="Title">Tên sách</label>
@@ -30,6 +30,15 @@
                    class="form-control"
                    placeholder="Ví dụ: Bocchi the Rock" />
             <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ISBN">Mã ISBN</label>
+            <input asp-for="ISBN"
+                   class="form-control"
+                   placeholder="Ví dụ: 123-456-78-9012-1" />
+            <span class="text-muted fw-normal fs-7">(Có thể trống để tự động tạo)</span>
+            <span asp-validation-for="ISBN" class="text-danger"></span>
         </div>
 
         <div class="form-group">

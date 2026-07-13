@@ -126,21 +126,25 @@ public class BookService : IBookService
 
     public async Task CreateAsync(BookCreateViewModel model)
     {
-        var books = await _bookRepository.GetAllReadOnlyAsync();
-        var random1 = new Random().Next(10, 99);
-        var random2 = new Random().Next(1000, 9999);
-        var random3 = new Random().Next(1, 9);
-
+        string finalIsbn = model.ISBN;
+        if (string.IsNullOrWhiteSpace(finalIsbn))
+        {
+            var random1 = new Random().Next(10, 99);
+            var random2 = new Random().Next(1000, 9999);
+            var random3 = new Random().Next(1, 9);
+            
+            finalIsbn = $"978-604-{random1}-{random2}-{random3}";
+        }
         var newBook = new Book
         {
-            ISBN = $"978-604-{random1}-{random2}-{random3}",
+            ISBN = finalIsbn,
             Title = model.Title, 
             Author = model.Author, 
-            Price = model.Price, 
-            Quantity = model.Quantity, 
-            MinStock = model.MinStock, 
+            Price = model.Price ?? 0, 
+            Quantity = model.Quantity ?? 0, 
+            MinStock = model.MinStock ?? 0, 
             UpdatedAt = DateTime.Now,
-            GenreId = model.GenreId
+            GenreId = model.GenreId ?? 0
         };
 
         await _bookRepository.AddAsync(newBook);
@@ -207,10 +211,10 @@ public class BookService : IBookService
         book.Title = model.Title;
         book.ISBN = model.ISBN;
         book.Author = model.Author;
-        book.Price = model.Price;
-        book.Quantity = model.Quantity;
-        book.MinStock = model.MinStock;
-        book.GenreId = model.GenreId;
+        book.Price = model.Price ?? 0;
+        book.Quantity = model.Quantity ?? 0;
+        book.MinStock = model.MinStock ?? 0;
+        book.GenreId = model.GenreId ?? 0;
         book.UpdatedAt = DateTime.Now;
 
         await _context.SaveChangesAsync();

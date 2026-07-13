@@ -2,6 +2,7 @@ using BookstoreCatalog.Mvc.ViewModels;
 using BookstoreCatalog.Mvc.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.Design;
 
 namespace BookstoreCatalog.Mvc.Controllers;
 
@@ -32,6 +33,12 @@ public class BooksController : Controller
         return View(viewModel);
     }
 
+    public async Task<IActionResult> Stats()
+    {
+        var books = await _bookService.GetBookStatsAsync();
+        return View(books);
+    }
+
     [HttpGet]
     public async Task<IActionResult> Search(string? keyword, int? genreId, decimal? minPrice, decimal? maxPrice)
     {
@@ -50,6 +57,15 @@ public class BooksController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(BookCreateViewModel model)
     {
+        if (!string.IsNullOrWhiteSpace(model.ISBN))
+        {
+            bool isUnique = await _bookService.IsISBNUniqueAsync(model.ISBN);
+            if (!isUnique)
+            {
+                ModelState.AddModelError("ISBN", "Mã ISBN này đã tồn tại trong hệ thống. Vui lòng để trống hoặc nhập mã khác.");
+            }
+        }
+
         if (!ModelState.IsValid)
         {
             return View(model);
@@ -77,27 +93,31 @@ public class BooksController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(BookEditViewModel model)
     {
-        if (!ModelState.IsValid)
+        bool isUnique = await _bookService.IsISBNUniqueAsync(model.ISBN, model.Id);
+        if (!isUnique)
         {
-            return View(model);
+            ModelState.AddModelError("ISBN", "Mã ISBN này đã được sử dụng bởi một cuốn sách khác.");
         }
 
-        try
+        if (ModelState.IsValid)
         {
-            await _bookService.UpdateBookAsync(model);
-            TempData["SuccessMessage"] = $"Cập nhật thông tin sách '{model.Title}' thành công!";
-            return RedirectToAction(nameof(Index));
+
+            try
+            {
+                await _bookService.UpdateBookAsync(model);
+                TempData["SuccessMessage"] = $"Cập nhật thông tin sách '{model.Title}' thành công!";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                ModelState.AddModelError("", "Dữ liệu đã bị thay đổi bởi một người dùng khác. Vui lòng tải lại trang.");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+            }
         }
-        catch (DbUpdateConcurrencyException)
-        {
-            ModelState.AddModelError("", "Dữ liệu đã bị thay đổi bởi một người dùng khác. Vui lòng tải lại trang.");
-            return View(model);
-        }
-        catch (Exception ex)
-        {
-            ModelState.AddModelError("", ex.Message);
-            return View(model);
-        }
+        return View(model);
     }
 
     public IActionResult Welcome()
@@ -209,12 +229,12 @@ public class BooksController : Controller
 
         if (viewModel == null)
         {
-        ViewBag.BookId = id;
-        ViewBag.TraceId = traceId;
-        
-        return View("ApiError404");
-    }
+            ViewBag.BookId = id;
+            ViewBag.TraceId = traceId;
+            
+            return View("ApiError404");
+        }
 
-    return View("Detail", viewModel);
-}
+        return View("Detail", viewModel);
+    }
 }

@@ -224,3 +224,12 @@ C:\Users\ASUS\OneDrive\Máy tính\API_ASPNET\Lab02_03_04\BookstoreCatalog.Mvc\ob
 C:\Users\ASUS\OneDrive\Máy tính\API_ASPNET\Lab02_03_04\BookstoreCatalog.Mvc\obj\Debug\net10.0\ref\BookstoreCatalog.Mvc.dll
 C:\Users\ASUS\OneDrive\Máy tính\API_ASPNET\Lab02_03_04\BookstoreCatalog.Mvc\obj\Debug\net10.0\compressed\vxegihwpc7-{0}-l8djelxj0k-l8djelxj0k.gz
 C:\Users\ASUS\OneDrive\Máy tính\API_ASPNET\Lab02_03_04\BookstoreCatalog.Mvc\bin\Debug\net10.0\Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore.dll
+C:\Users\ASUS\OneDrive\Máy tính\API_ASPNET\Lab02_03_04\BookstoreCatalog.Mvc\bin\Debug\net10.0\Serilog.dll
+C:\Users\ASUS\OneDrive\Máy tính\API_ASPNET\Lab02_03_04\BookstoreCatalog.Mvc\bin\Debug\net10.0\Serilog.AspNetCore.dll
+C:\Users\ASUS\OneDrive\Máy tính\API_ASPNET\Lab02_03_04\BookstoreCatalog.Mvc\bin\Debug\net10.0\Serilog.Extensions.Hosting.dll
+C:\Users\ASUS\OneDrive\Máy tính\API_ASPNET\Lab02_03_04\BookstoreCatalog.Mvc\bin\Debug\net10.0\Serilog.Extensions.Logging.dll
+C:\Users\ASUS\OneDrive\Máy tính\API_ASPNET\Lab02_03_04\BookstoreCatalog.Mvc\bin\Debug\net10.0\Serilog.Formatting.Compact.dll
+C:\Users\ASUS\OneDrive\Máy tính\API_ASPNET\Lab02_03_04\BookstoreCatalog.Mvc\bin\Debug\net10.0\Serilog.Settings.Configuration.dll
+C:\Users\ASUS\OneDrive\Máy tính\API_ASPNET\Lab02_03_04\BookstoreCatalog.Mvc\bin\Debug\net10.0\Serilog.Sinks.Console.dll
+C:\Users\ASUS\OneDrive\Máy tính\API_ASPNET\Lab02_03_04\BookstoreCatalog.Mvc\bin\Debug\net10.0\Serilog.Sinks.Debug.dll
+C:\Users\ASUS\OneDrive\Máy tính\API_ASPNET\Lab02_03_04\BookstoreCatalog.Mvc\bin\Debug\net10.0\Serilog.Sinks.File.dll

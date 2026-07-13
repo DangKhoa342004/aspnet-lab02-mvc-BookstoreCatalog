@@ -21,6 +21,6 @@ public class Book
     public DateTime? DeletedAt { get; set; }
     public ICollection<SaleItem>? SaleItems { get; set; } = new List<SaleItem>();
 
-    [ConcurrencyCheck]
+    [Timestamp]
     public byte[] RowVersion { get; set; } = Array.Empty<byte>();
 }

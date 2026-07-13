@@ -25,7 +25,7 @@
 
     <div class="stat-card">
         <div class="stat-label">Tổng số sách sắp hết hàng</div>
-        <div class="stat-number">@Model.LowStockCount</div>
+        <div class="stat-number"><span class="text-warning">@Model.LowStockCount</span></div>
     </div>
 
     <div class="stat-card">
@@ -45,7 +45,13 @@
     @if (Model.OutOfStockCount > 0)
     {
         <p class="text-danger">
-            Có sách đã hết hàng. Cần kiểm tra và nhập hàng sớm.
+            Có sách đã hết hàng. Cần nhập hàng gấp.
+        </p>
+    }
+    else if (Model.LowStockCount > 0)
+    {
+        <p class="text-warning">  
+            Có sách sắp hết hàng. Cần kiểm tra và nhập hàng sớm.
         </p>
     }
     else

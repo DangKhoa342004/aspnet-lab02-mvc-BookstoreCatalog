@@ -20,26 +20,27 @@
 }
 else
 {
-    <div class="table-responsive shadow-sm rounded">
-        <table class="table table-hover table-bordered bg-white align-middle text-center">
+    <div class="table-responsive shadow border-0 rounded-3 overflow-hidden">
+        <table class="table table-hover table-bordered bg-white align-middle mb-0">
             <thead class="table-dark">
                 <tr>
-                    <th>Mã ISBN</th>
-                    <th>Tên Sách</th>
-                    <th>Ngày Xóa</th>
-                    <th>Actions</th>
+                    <th class="py-3" style="width: 20%;">Mã ISBN</th>
+                    <th class="py-3 text-start ps-4" style="width: 45%;">Tên Sách</th>
+                    <th class="py-3" style="width: 20%;">Ngày Xóa</th>
+                    <th class="py-3" style="width: 15%;">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td class="fw-bold">@item.ISBN</td>
-                        <td>@item.Title</td>
-                        <td>@item.DeletedAt?.ToString("dd/MM/yyyy HH:mm:ss")</td>
-                        <td>
+                        <td class="fw-bold py-3 text-secondary">@item.ISBN</td>
+                        <td class="text-start py-3 ps-4 fw-medium text-dark">@item.Title</td>
+                        <td class="py-3 text-muted">@item.DeletedAt?.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                        <td class="py-3">
                             <form asp-action="Restore" asp-route-id="@item.Id" method="post" style="display:inline;">
-                                <button type="submit" class="btn btn-sm btn-success fw-bold" onclick="return confirm('Bạn có chắc chắn muốn khôi phục sách này?');">
+                                <button type="submit" class="btn btn-sm btn-success fw-bold" 
+                                        onclick="return confirm('Bạn có chắc chắn muốn khôi phục sách này?');">
                                     Restore
                                 </button>
                             </form>

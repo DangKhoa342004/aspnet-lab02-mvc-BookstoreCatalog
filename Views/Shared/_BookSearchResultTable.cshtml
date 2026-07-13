@@ -31,16 +31,20 @@
                         Xem
                     </a>
                 </td>
-                <li class="mt-2"> 
-                    @if(item.Status == "Sắp hết" || item.Status == "Hết hàng")
+                <td class="text-center"> 
+                    @if(item.Status == "Sắp hết")
                     {
                         <span class="badge bg-warning text-dark">@item.Status</span>
+                    }
+                    else if(item.Status == "Hết hàng")
+                    {
+                        <span class="badge bg-danger">@item.Status</span>
                     }
                     else
                     {
                         <span class="badge bg-success">@item.Status</span>
                     }
-                </li>
+                </td>
             </tr>
         }
     </tbody>
