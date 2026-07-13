@@ -20,7 +20,7 @@ public class HomeController : Controller
     {
         var today = DateTime.Today;
         var totalBooks = await _context.Books.IgnoreQueryFilters().AsNoTracking().CountAsync();
-        var activeBooks = await _context.Books.AsNoTracking().CountAsync();
+        var activeBooks = await _context.Books.AsNoTracking().CountAsync(b => !b.IsDeleted);
         var deletedBooks = await _context.Books.IgnoreQueryFilters().AsNoTracking().CountAsync(b => b.IsDeleted);
         var logsCountToday = await _context.AuditLogs.CountAsync(l => l.Time >= today);
 
@@ -28,6 +28,9 @@ public class HomeController : Controller
         ViewBag.Active = activeBooks;
         ViewBag.Deleted = deletedBooks;
         ViewBag.Logs = logsCountToday;
+
+        ViewBag.LowStockCount = await _context.Books.AsNoTracking()
+            .CountAsync(b => !b.IsDeleted && b.Quantity < 5);
         
         return View();
     }

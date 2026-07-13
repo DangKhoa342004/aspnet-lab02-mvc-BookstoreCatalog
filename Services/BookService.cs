@@ -49,7 +49,7 @@ public class BookService : IBookService
             var log = new AuditLogs
             {
                 Level = "Error",
-                Message = $"Invalid request: ProductId={id} TraceId={Guid.NewGuid().ToString().Substring(0, 8).ToUpper()}",
+                Message = $"Invalid request: BookId={id} TraceId={Guid.NewGuid().ToString().Substring(0, 8).ToUpper()}",
                 Time = DateTime.Now
             };
             _context.AuditLogs.Add(log);
@@ -154,7 +154,7 @@ public class BookService : IBookService
         var log = new AuditLogs
             {
                 Level = "Information",
-                Message = $"Product created. ProductId={newBook.Id}",
+                Message = $"Book created. BookId={newBook.Id}",
                 Time = DateTime.Now
             };
         _context.AuditLogs.Add(log);
@@ -223,7 +223,7 @@ public class BookService : IBookService
         var log = new AuditLogs
         {
             Level = "Information",
-            Message = $"Product updated. ProductId={model.Id}",
+            Message = $"Book updated. BookId={model.Id}",
             Time = DateTime.Now
         };
         _context.AuditLogs.Add(log);
@@ -244,7 +244,7 @@ public class BookService : IBookService
         var log = new AuditLogs
         {
             Level = "Warning",
-            Message = $"Product soft deleted. ProductId={id}",
+            Message = $"Book soft deleted. BookId={id}",
             Time = DateTime.Now
         };
         _context.AuditLogs.Add(log);
@@ -282,7 +282,7 @@ public class BookService : IBookService
         var log = new AuditLogs
         {
             Level = "Information",
-            Message = $"Product restored. ProductId={id}",
+            Message = $"Book restored. BookId={id}",
             Time = DateTime.Now
         };
         _context.AuditLogs.Add(log);

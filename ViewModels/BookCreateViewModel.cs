@@ -10,7 +10,7 @@ public class BookCreateViewModel
 
     [RegularExpression(@"^\d{3}-\d{3}-\d{2}-\d{4}-\d$", 
         ErrorMessage = "ISBN phải đúng định dạng 13 số dạng 3-3-2-4-1 (Ví dụ: 978-604-55-9835-1).")]
-    public string ISBN { get; set; } = "";
+    public string? ISBN { get; set; } = "";
 
     [Required(ErrorMessage = "Tác giả không được để trống")]
     [StringLength(100, ErrorMessage = "Tác giả không được vượt quá 100 ký tự")]
