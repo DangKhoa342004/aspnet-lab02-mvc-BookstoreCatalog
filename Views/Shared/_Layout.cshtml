@@ -23,9 +23,27 @@
                 <a asp-controller="Books" asp-action="Create">Create</a>
                 <a asp-controller="Books" asp-action="Trash">Trash</a>
                 <a asp-controller="AuditLogs" asp-action="Index">Audit Logs</a>
-                <a href="/health/ready">Health</a>
-                <a href="/api/books/9999">API Error Demo</a>
-
+                <div class="dropdown d-inline-block">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="healthDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">
+                        Health Checks
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="healthDropdown">
+                        <li><a class="dropdown-item text-primary" asp-controller="Health" asp-action="Live">Live Check (UI)</a></li>
+                        <li><a class="dropdown-item text-primary" asp-controller="Health" asp-action="Ready">Ready Check (UI)</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-primary" asp-controller="Health" asp-action="ReadyJson" target="_blank">Readiness Check (Raw JSON)</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown d-inline-block">
+                    <a class="dropdown-toggle text-white" href="#" id="apiErrorDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">
+                        API Error Demos
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="apiErrorDropdown">
+                        <li><a class="dropdown-item text-primary" asp-controller="Books" asp-action="ApiErrorDemo" asp-route-id="9999">API Error 404 (UI View)</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-primary" asp-controller="Books" asp-action="ApiErrorJsonDemo" asp-route-id="9999" target="_blank">API Error 404 (Raw JSON)</a></li>
+                    </ul>
+                </div>
             </nav>
         </div>
     </header>
@@ -41,6 +59,7 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

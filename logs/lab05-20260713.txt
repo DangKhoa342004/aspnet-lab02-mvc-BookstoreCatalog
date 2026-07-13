@@ -15,3 +15,34 @@
 2026-07-13 11:29:54.689 +07:00 [INF] Đã khôi phục sách. ID=7
 2026-07-13 11:37:46.948 +07:00 [INF] Đã điều chỉnh tồn kho. ID=4, NewQty=16
 2026-07-13 11:45:47.735 +07:00 [INF] Application is shutting down...
+2026-07-13 11:51:18.655 +07:00 [WRN] Entity 'Book' has a global query filter defined and is the required end of a relationship with the entity 'SaleItem'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-13 12:29:06.484 +07:00 [INF] Now listening on: http://localhost:5296
+2026-07-13 12:29:06.519 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-13 12:29:06.520 +07:00 [INF] Hosting environment: Development
+2026-07-13 12:29:06.521 +07:00 [INF] Content root path: C:\Users\ASUS\OneDrive\Máy tính\API_ASPNET\Lab02_03_04\BookstoreCatalog.Mvc
+2026-07-13 12:29:11.819 +07:00 [WRN] Entity 'Book' has a global query filter defined and is the required end of a relationship with the entity 'SaleItem'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-13 12:31:23.571 +07:00 [INF] Application is shutting down...
+2026-07-13 12:31:33.694 +07:00 [INF] Now listening on: http://localhost:5296
+2026-07-13 12:31:33.733 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-13 12:31:33.735 +07:00 [INF] Hosting environment: Development
+2026-07-13 12:31:33.737 +07:00 [INF] Content root path: C:\Users\ASUS\OneDrive\Máy tính\API_ASPNET\Lab02_03_04\BookstoreCatalog.Mvc
+2026-07-13 12:31:47.103 +07:00 [WRN] Entity 'Book' has a global query filter defined and is the required end of a relationship with the entity 'SaleItem'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-13 12:31:53.750 +07:00 [INF] Application is shutting down...
+2026-07-13 12:33:11.997 +07:00 [INF] Now listening on: http://localhost:5296
+2026-07-13 12:33:12.031 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-13 12:33:12.032 +07:00 [INF] Hosting environment: Development
+2026-07-13 12:33:12.032 +07:00 [INF] Content root path: C:\Users\ASUS\OneDrive\Máy tính\API_ASPNET\Lab02_03_04\BookstoreCatalog.Mvc
+2026-07-13 12:33:15.731 +07:00 [WRN] Entity 'Book' has a global query filter defined and is the required end of a relationship with the entity 'SaleItem'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-13 12:33:59.172 +07:00 [INF] Application is shutting down...
+2026-07-13 12:38:26.503 +07:00 [INF] Now listening on: http://localhost:5296
+2026-07-13 12:38:26.533 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-13 12:38:26.535 +07:00 [INF] Hosting environment: Development
+2026-07-13 12:38:26.536 +07:00 [INF] Content root path: C:\Users\ASUS\OneDrive\Máy tính\API_ASPNET\Lab02_03_04\BookstoreCatalog.Mvc
+2026-07-13 12:38:39.147 +07:00 [WRN] Entity 'Book' has a global query filter defined and is the required end of a relationship with the entity 'SaleItem'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-07-13 12:38:42.707 +07:00 [ERR] Invalid request: BookId=9999
+2026-07-13 12:55:50.104 +07:00 [INF] Application is shutting down...
+2026-07-13 12:57:27.894 +07:00 [INF] Now listening on: http://localhost:5296
+2026-07-13 12:57:27.928 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-13 12:57:27.930 +07:00 [INF] Hosting environment: Development
+2026-07-13 12:57:27.930 +07:00 [INF] Content root path: C:\Users\ASUS\OneDrive\Máy tính\API_ASPNET\Lab02_03_04\BookstoreCatalog.Mvc
+2026-07-13 12:57:59.641 +07:00 [INF] Application is shutting down...

@@ -42,7 +42,7 @@ public class HealthController : Controller
     {
         var report = await _healthCheckService.CheckHealthAsync(check => check.Tags.Contains("live"));
         ViewBag.LiveStatus = report.Status.ToString(); 
-        
+
         var startTime = Process.GetCurrentProcess().StartTime;
         var uptime = DateTime.Now - startTime;
             
@@ -54,5 +54,29 @@ public class HealthController : Controller
         ViewBag.Environment = _env.EnvironmentName;
 
         return View();
+    }
+
+    [Route("health/ready-json")]
+    public async Task<IActionResult> ReadyJson()
+    {
+        var report = await _healthCheckService.CheckHealthAsync();
+
+        var jsonResult = new
+        {
+            status = report.Status.ToString(),
+            description = report.Status == HealthStatus.Healthy 
+                ? "All services are ready and running smoothly." 
+                : "Some essential services are failing.",
+            checks = report.Entries.Select(e => new
+            {
+                name = e.Key,
+                status = e.Value.Status.ToString(),
+                description = e.Key == "self" 
+                    ? "Application process is active." 
+                    : (e.Value.Status == HealthStatus.Healthy ? "Database connection is healthy." : "Cannot connect to database!")
+            }).ToList()
+        };
+
+        return Json(jsonResult);
     }
 }

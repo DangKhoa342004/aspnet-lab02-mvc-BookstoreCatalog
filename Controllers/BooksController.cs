@@ -237,4 +237,32 @@ public class BooksController : Controller
 
         return View("Detail", viewModel);
     }
+
+    [Route("api-json/books/{id}")]
+    public async Task<IActionResult> ApiErrorJsonDemo(int id)
+    {
+        var viewModel = await _bookService.GetBookDetailAsync(id);
+        var traceId = HttpContext.TraceIdentifier;
+
+        if (viewModel == null)
+        {
+            var problemDetails = new Microsoft.AspNetCore.Mvc.ProblemDetails
+            {
+                Type = "https://example.com/problems/book-not-found",
+                Title = "Book not found",
+                Status = StatusCodes.Status404NotFound,
+                Detail = $"The book with id {id} was not found.",
+                Instance = HttpContext.Request.Path
+            };
+
+            problemDetails.Extensions.Add("traceId", traceId);
+            problemDetails.Extensions.Add("errorCode", "BOOK_NOT_FOUND");
+
+            Response.ContentType = "application/problem+json";
+
+            return StatusCode(StatusCodes.Status404NotFound, problemDetails);
+        }
+
+        return Json(viewModel);
+    }
 }
