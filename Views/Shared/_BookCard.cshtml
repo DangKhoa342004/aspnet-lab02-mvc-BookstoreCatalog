@@ -1,0 +1,41 @@
+@model BookstoreCatalog.Mvc.ViewModels.BookListViewModel
+
+<div class="book-card">
+    <div class="book-card-img">
+        <img src="@(string.IsNullOrEmpty(Model.ImagePath) ? "/uploads/books/default-book.jpg" : Model.ImagePath)" 
+             alt="@Model.Title" />
+    </div>
+
+    <div class="book-card-body">
+        <h3>@Model.Title</h3>
+
+        <p class="book-meta">
+            Tác giả: @Model.Author
+        </p>
+
+        <p class="book-meta">
+            Thể loại: @Model.GenreName
+        </p>
+
+        <p class="book-price">
+            @Model.PriceText
+        </p>
+
+        <p class="book-info">
+            Số lượng: <strong>@Model.Quantity </strong>
+        </p>
+
+        <p class="book-info">
+            ISBN: <strong>@Model.ISBN</strong>
+        </p>
+
+        <div class="card-actions">
+            <a class="btn btn-light"
+               asp-controller="Books"
+               asp-action="Detail"
+               asp-route-id="@Model.Id">
+                Xem chi tiết
+            </a>
+        </div>
+    </div>
+</div>

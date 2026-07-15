@@ -1,0 +1,48 @@
+@model List<BookstoreCatalog.Mvc.ViewModels.BookListViewModel>
+
+@{
+    ViewData["Title"] = "Book Catalog";
+    var totalItems = Model.Count;
+}
+
+<div class="page-header">
+    <div>
+        <h2 class="page-title text-primary fw-bold">Book List</h2>
+        <p class="page-description text-muted">Giao diện danh sách (Chỉ hiển thị các sản phẩm đang hoạt động).</p>
+    </div>
+
+    <div>
+        <a class="btn btn-secondary" asp-controller="Books" asp-action="Search"> Search Book</a>
+
+        <a class="btn btn-warning" asp-controller="Books" asp-action="Create"> Add New Book</a>
+    </div>
+    
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="success-box">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<div class="info-box">
+    <strong>Tổng số sách:</strong> @totalItems
+</div>
+
+@if (Model.Count == 0)
+{
+    <div class="alert alert-warning text-center fw-bold shadow-sm">
+        Kho đang trống hoặc tất cả sách đã bị đưa vào thùng rác.
+    </div>
+}
+else
+{
+    <div class="product-grid">
+        @foreach (var item in Model)
+        {
+            <partial name="_BookCard" model="item" />
+        }
+    </div>
+}
+

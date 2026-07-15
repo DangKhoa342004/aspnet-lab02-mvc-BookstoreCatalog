@@ -1,0 +1,64 @@
+@model BookstoreCatalog.Mvc.ViewModels.BookEditViewModel
+
+@{
+    ViewData["Title"] = "Edit Book";
+}
+
+<h2 class="text-warning mb-4 fw-bold">Edit Book</h2>
+
+<div class="card shadow-sm p-4" style="max-width: 600px;">
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3 fw-bold"></div>
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="RowVersion" />
+
+        <div class="mb-3">
+            <label class="form-label fw-bold">Tên sách</label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-bold">ISBN</label>
+            <input asp-for="ISBN" class="form-control" />
+            <span asp-validation-for="ISBN" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-bold">Tác giả</label>
+            <input asp-for="Author" class="form-control" />
+            <span asp-validation-for="Author" class="text-danger"></span>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label class="form-label fw-bold">Giá bán</label>
+                <input asp-for="Price" type="number" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label fw-bold">Số lượng</label>
+                <input asp-for="Quantity" type="number" class="form-control" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label fw-bold">Mức tồn tối thiểu</label>
+                <input asp-for="MinStock" type="number" class="form-control" />
+                <span asp-validation-for="MinStock" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label fw-bold">Mã Thể Loại (ID)</label>
+            <input asp-for="GenreId" type="number" class="form-control" />
+            <span asp-validation-for="GenreId" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-warning fw-bold px-4">Save</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">Back to List</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

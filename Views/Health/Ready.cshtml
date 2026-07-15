@@ -1,0 +1,54 @@
+@{
+    ViewData["Title"] = "Health Check";
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold mb-4 text-dark">Health Check - /health/ready</h2>
+
+    <div class="card shadow-sm border-0 rounded-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th style="width: 25%;" class="ps-3">Check</th>
+                        <th style="width: 25%;">Status</th>
+                        <th style="width: 50%;">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="ps-3 fw-medium">self</td>
+                        <td>
+                            <span class="badge bg-success px-3 py-1.5 rounded-2">@ViewBag.SelfStatus</span>
+                        </td>
+                        <td class="text-secondary">Application is running.</td>
+                    </tr>
+                    <tr>
+                        <td class="ps-3 fw-medium">database</td>
+                        <td>
+                            <!-- Tự động đổi màu đỏ nếu DB lỗi -->
+                            <span class="badge @(ViewBag.DbStatus == "Healthy" ? "bg-success" : "bg-danger") px-3 py-1.5 rounded-2">
+                                @ViewBag.DbStatus
+                            </span>
+                        </td>
+                        <td class="text-secondary">
+                            @(ViewBag.DbStatus == "Healthy" ? "Database connection is healthy." : "Cannot connect to database!")
+                        </td>
+                    </tr>
+                    <tr class="table-light fw-bold">
+                        <td class="ps-3 text-dark">Overall Status</td>
+                        <td>
+                            <!-- Tự động đổi màu tổng quan -->
+                            <span class="badge @(ViewBag.OverallStatus == "Healthy" ? "bg-success" : "bg-danger") px-3 py-1.5 rounded-2">
+                                @ViewBag.OverallStatus
+                            </span>
+                        </td>
+                        <td class="text-secondary fw-normal">
+                            @(ViewBag.OverallStatus == "Healthy" ? "All checks are healthy." : "Some services are failing.")
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

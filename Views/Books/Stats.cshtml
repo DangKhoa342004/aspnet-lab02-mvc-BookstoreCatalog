@@ -1,0 +1,63 @@
+@model BookStatsViewModel
+
+@{
+    ViewData["Title"] = "Inventory Stats";
+}
+
+<div class="page-header">
+    <div>
+        <h2 class="page-title">Inventory Stats</h2>
+        <p class="page-description">
+            Trang này giúp bạn xem nhanh tổng quan tình hình tồn kho của cửa hàng.
+        </p>
+    </div>
+
+    <a class="btn btn-light" href="/Books">
+        Quay lại danh sách
+    </a>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-label">Tổng số loại sách</div>
+        <div class="stat-number">@Model.TotalItems</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-label">Tổng số sách sắp hết hàng</div>
+        <div class="stat-number"><span class="text-warning">@Model.LowStockCount</span></div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-label">Tổng giá trị tồn kho</div>
+        <div class="stat-number">@Model.TotalInventoryValueText</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-label">Tổng sách đã hết hàng</div>
+        <div class="stat-number"><span class="text-danger">@Model.OutOfStockCount</span></div>
+    </div>
+</div>
+
+<div class="info-panel">
+    <h4>Danh giá tình hình tồn kho</h4>
+
+    @if (Model.OutOfStockCount > 0)
+    {
+        <p class="text-danger">
+            Có sách đã hết hàng. Cần nhập hàng gấp.
+        </p>
+    }
+    else if (Model.LowStockCount > 0)
+    {
+        <p class="text-warning">  
+            Có sách sắp hết hàng. Cần kiểm tra và nhập hàng sớm.
+        </p>
+    }
+    else
+    {
+        <p class="text-success">
+            Tồn kho hiện tại đang ở tình trạng tốt.
+        </p>
+    }
+</div>

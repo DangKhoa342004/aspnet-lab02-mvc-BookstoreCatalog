@@ -1,0 +1,44 @@
+@model BookstoreCatalog.Mvc.ViewModels.AccountLoginViewModel
+@{
+    ViewData["Title"] = "Đăng nhập";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+        <h2 class="text-center mb-4">Login</h2>
+        
+        <form asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="card p-4 shadow-sm">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label">Email</label>
+                <input asp-for="Email" class="form-control"/>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label">Mật khẩu</label>
+                <input asp-for="Password" class="form-control"/>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input asp-for="RememberMe" class="form-check-input" />
+                <label asp-for="RememberMe" class="form-check-label">Nhớ tài khoản</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Đăng Nhập</button>
+            <hr class="mt-4 mb-3" />
+            <div class="text-center mt-3">
+                <span class="text-muted">Bạn chưa có tài khoản? </span>
+                <a asp-action="Register" asp-controller="Account" class="text-primary fw-bold text-success">
+                    Đăng ký ngay
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

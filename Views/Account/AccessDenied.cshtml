@@ -1,0 +1,25 @@
+@{
+    ViewData["Title"] = "Access Denied";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center align-items-center" style="min-height: 70vh;">
+        <div class="col-md-6 col-lg-5 text-center">
+            <h1 class="fw-bold text-dark mb-2" style="font-size: 2rem;">403 - Không Có Quyền Truy Cập</h1>
+            <p class="text-secondary mb-4 px-3">
+                Tài khoản của bạn hiện tại không được quyền để xem hoặc thao tác trên trang này.
+            </p>
+
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a href="/" class="btn btn-dark btn-lg px-4 shadow-sm fw-medium">
+                    Về trang chủ
+                </a>
+                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-outline-danger btn-lg px-4 fw-medium w-100">
+                        Đăng nhập tài khoản khác
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

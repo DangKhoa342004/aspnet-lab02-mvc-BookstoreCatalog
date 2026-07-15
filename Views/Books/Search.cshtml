@@ -1,0 +1,86 @@
+@model BookstoreCatalog.Mvc.ViewModels.BookFilterViewModel
+
+@{
+    ViewData["Title"] = "Search & Filter Books";
+}
+
+<div class="page-header">
+    <div>
+        <h2 class="page-title">Search & Filter Books</h2>
+        <p class="page-description">
+            Form GET dùng Query String để tìm kiếm sách theo từ khóa và giá tối thiểu.
+        </p>
+    </div>
+
+    <a class="btn btn-light"
+       asp-controller="Books"
+       asp-action="Index">
+        Quay lại danh sách
+    </a>
+</div>
+
+<div class="form-layout">
+    <form class="form-box"
+          asp-controller="Books"
+          asp-action="Search"
+          method="get">
+
+        <div class="form-group">
+            <label asp-for="Keyword">Key Word</label>
+            <input asp-for="Keyword"
+                   class="form-control"
+                   placeholder="Ví dụ: Đắc nhân tâm, novel, romance" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="MinPrice">Min Price</label>
+            <input asp-for="MinPrice"
+                   class="form-control"
+                   placeholder="Ví dụ: 300.000" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="MaxPrice">Max Price</label>
+            <input asp-for="MaxPrice"
+                   class="form-control"
+                   placeholder="Ví dụ: 1.000.000" />
+        </div>
+
+        <button class="btn" type="submit">
+            Search
+        </button>
+
+        <a class="btn btn-secondary"
+           asp-controller="Books"
+           asp-action="Search">
+            Reset
+        </a>
+    </form>
+
+    <div>
+        <h3>Search Result</h3>
+
+        <p>
+            Keyword: <strong>@Model.Keyword</strong>
+        </p>
+
+        <p>
+            Min Price: <strong>@Model.MinPrice</strong>
+        </p>
+
+        <p>
+            Max Price <strong>@Model.MaxPrice</strong>
+        </p>
+
+        @if (Model.Books.Count == 0)
+        {
+            <span class="badge badge-warning text-dark">
+                Không tìm thấy sách phù hợp. Vui lòng thử từ khóa khác.
+            </span>
+        }
+        else
+        {
+            @await Html.PartialAsync("_BookSearchResultTable", Model.Books)
+        }
+    </div>
+</div>

@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BookstoreCatalog.Mvc</title>
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-content">
+            <div class="brand">
+                <a asp-controller="Home" asp-action="Index">BookstoreCatalog.Mvc</a>
+            </div>
+
+            <nav class="main-nav">
+                <a asp-controller="Home" asp-action="Index">Dashboard</a>
+                <a asp-controller="Books" asp-action="Index">Books</a>
+                <a asp-controller="Books" asp-action="Stats">Stats</a>
+                <a asp-controller="Books" asp-action="Search">Search</a>
+                <a asp-controller="Books" asp-action="Create">Create</a>
+                <a asp-controller="Sales" asp-action="Index">Sales</a>
+                <a asp-controller="Books" asp-action="Trash">Trash</a>
+                <a asp-controller="AuditLogs" asp-action="Index">Audit Logs</a>
+                <div class="dropdown d-inline-block">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="healthDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">
+                        Health Checks
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="healthDropdown">
+                        <li><a class="dropdown-item text-primary" asp-controller="Health" asp-action="Live">Live Check (UI)</a></li>
+                        <li><a class="dropdown-item text-primary" asp-controller="Health" asp-action="Ready">Ready Check (UI)</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-primary" asp-controller="Health" asp-action="ReadyJson" target="_blank">Readiness Check (Raw JSON)</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown d-inline-block">
+                    <a class="dropdown-toggle text-white" href="#" id="apiErrorDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">
+                        API Error Demos
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="apiErrorDropdown">
+                        <li><a class="dropdown-item text-primary" asp-controller="Books" asp-action="ApiErrorDemo" asp-route-id="9999">API Error 404 (UI View)</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-primary" asp-controller="Books" asp-action="ApiErrorJsonDemo" asp-route-id="9999" target="_blank">API Error 404 (Raw JSON)</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        @RenderBody()
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <span>&copy; 2026 - BookstoreCatalog.Mvc - Lab05</span>
+            <a href="#">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

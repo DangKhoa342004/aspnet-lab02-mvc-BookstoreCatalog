@@ -1,0 +1,129 @@
+@model BookstoreCatalog.Mvc.ViewModels.AuditLogSearchViewModel
+@{
+    ViewData["Title"] = "Audit Log Search and Security Dashboard";
+}
+
+<div class="container-fluid mt-4">
+    <h2 class="text-danger fw-bold mb-4"><i class="bi bi-shield-lock-fill"></i>Security Dashboard</h2>
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-danger mb-3 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title"><i class="bi bi-x-octagon"></i>AccessDenied</h5>
+                    <h2 class="display-4 fw-bold mt-2">@Model.AccessDeniedToday</h2>
+                    <small>Today</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-dark bg-warning mb-3 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title"><i class="bi bi-exclamation-triangle"></i>Thao tác nhạy cảm</h5>
+                    <h2 class="display-4 fw-bold mt-2">@Model.SensitiveActionsToday</h2>
+                    <small>Today</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-secondary mb-3 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title"><i class="bi bi-file-earmark-x"></i>Upload bị từ chối</h5>
+                    <h2 class="display-4 fw-bold mt-2">@Model.RejectedUploadsToday</h2>
+                    <small>Today</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-light fw-bold">
+            <i class="bi bi-funnel"></i> Audit Log Search
+        </div>
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-3 align-items-end">
+                <div class="col-md-2">
+                    <label class="form-label fw-bold">User</label>
+                    <input asp-for="UserName" class="form-control" placeholder="User/email..." />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label fw-bold">Action</label>
+                    <select asp-for="LogAction" class="form-select" asp-items="Model.ActionOptions">
+                        <option value="">-- All --</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label fw-bold">Result</label>
+                    <select asp-for="Result" class="form-select">
+                        <option value="">-- All --</option>
+                        <option value="Success">Success</option>
+                        <option value="Failed">Failed</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label fw-bold">Start Date</label>
+                    <input asp-for="StartDate" type="date" class="form-control" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label fw-bold">End Date</label>
+                    <input asp-for="EndDate" type="date" class="form-control" />
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100 fw-bold">
+                        <i class="bi bi-search"></i> Search
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @if (Model.Logs == null || !Model.Logs.Any())
+    {
+        <div class="alert alert-info text-center fw-bold shadow-sm p-4">
+            <i class="bi bi-info-circle fs-4 d-block mb-2"></i> 
+            Không tìm thấy dữ liệu Audit Logs khớp với điều kiện.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive bg-white shadow-sm rounded border">
+            <table class="table table-hover table-striped mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Time</th>
+                        <th>User</th>
+                        <th>Action</th>
+                        <th>Entity (Id)</th>
+                        <th>Result</th>
+                        <th>IP Address</th>
+                        <th>Note</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var log in Model.Logs)
+                    {
+                        <tr>
+                            <td>@log.Time.ToString("HH:mm")</td>
+                            <td>@log.UserName</td>
+                            <td>
+                                <span class="badge bg-info text-dark">@log.Action</span>
+                            </td>
+                            <td>@log.EntityName (ID: @log.EntityId)</td>
+                            <td>
+                                @if (log.Result == "Success") 
+                                { 
+                                    <span class="text-success fw-bold">Success</span> 
+                                }
+                                else 
+                                { 
+                                    <span class="text-danger fw-bold">Fail</span> 
+                                }
+                            </td>
+                            <td>@log.IpAddress</td>
+                            <td>@log.Note</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
