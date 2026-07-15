@@ -1,11 +1,16 @@
-using Microsoft.AspNetCore.Mvc;
 using BookstoreCatalog.Mvc.Services;
 using BookstoreCatalog.Mvc.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.Design;
 
 namespace BookstoreCatalog.Mvc.Controllers;
 
 [ApiController]
 [Route("api/books")]
+[Authorize(Policy = "CanViewDataHealth")]
 public class ApiBooksController : ControllerBase
 {
     private readonly IBookService _bookService;

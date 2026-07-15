@@ -20,17 +20,23 @@ public class HomeController : Controller
     {
         var today = DateTime.Today;
         var totalBooks = await _context.Books.IgnoreQueryFilters().AsNoTracking().CountAsync();
-        var activeBooks = await _context.Books.AsNoTracking().CountAsync(b => !b.IsDeleted);
-        var deletedBooks = await _context.Books.IgnoreQueryFilters().AsNoTracking().CountAsync(b => b.IsDeleted);
-        var logsCountToday = await _context.AuditLogs.CountAsync(l => l.Time >= today);
+        var totalSales = await _context.Sales.IgnoreQueryFilters().AsNoTracking().CountAsync();
+        
 
-        ViewBag.Total = totalBooks;
-        ViewBag.Active = activeBooks;
-        ViewBag.Deleted = deletedBooks;
-        ViewBag.Logs = logsCountToday;
+        ViewBag.Books = totalBooks;
+        ViewBag.Sales = totalSales;
 
-        ViewBag.LowStockCount = await _context.Books.AsNoTracking()
-            .CountAsync(b => !b.IsDeleted && b.Quantity < 5);
+        if (User.IsInRole("Admin") || User.IsInRole("Staff"))
+        {
+            if (User.IsInRole("Admin"))
+            {
+                ViewBag.AuditLogCount = await _context.AuditLogs.AsNoTracking()
+                    .CountAsync(l => l.Action == "Delete" || l.Action == "AdjustStock" 
+                        || l.Action == "Restore" || l.Action == "Edit" || l.Action == "UploadImage");
+            }
+            ViewBag.LowStockCount = await _context.Books.AsNoTracking()
+                    .CountAsync(b => !b.IsDeleted && b.Quantity < 5);
+        }
         
         return View();
     }

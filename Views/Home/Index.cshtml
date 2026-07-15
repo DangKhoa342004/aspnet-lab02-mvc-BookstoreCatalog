@@ -9,53 +9,62 @@
         <div class="col">
             <div class="card border-0 text-white p-3 rounded-3 h-100" style="background-color: #1e62eb;">
                 <h5 class="card-title">Books</h5>
-                <h1 class="display-6 fw-bold my-2">@ViewBag.Total</h1>
-                <small>All Books</small>
+                <h1 class="display-6 fw-bold my-2">@ViewBag.Books</h1>
+                <small>Active + deleted</small>
             </div>
         </div>
     
         <div class="col">
             <div class="card border-0 text-white p-3 rounded-3 h-100" style="background-color: #198754;">
-                <h5 class="card-title">Active</h5>
-                <h1 class="display-6 fw-bold my-2">@ViewBag.Active</h1>
-                <small>IsDeleted = false</small>
+                <h5 class="card-title">Sales</h5>
+                <h1 class="display-6 fw-bold my-2">@ViewBag.Sales</h1>
+                <small>Create by transaction</small>
             </div>
         </div>
-
-        <div class="col">
-            <div class="card border-0 text-white p-3 rounded-3 h-100" style="background-color: #e65c00;">
-                <h5 class="card-title">Deleted</h5>
-                <h1 class="display-6 fw-bold my-2">@ViewBag.Deleted</h1>
-                <small>In Trash</small>
+        @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
+        {
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="col">
+                    <div class="card border-0 text-white p-3 rounded-3 h-100" style="background-color: #7a22cf;">
+                        <h5 class="card-title">Auditlogs Today</h5>
+                        <h1 class="display-6 fw-bold my-2">@ViewBag.AuditLogCount</h1>
+                        <small>Serilog entries</small>
+                    </div>
+                </div>
+            }
+            <div class="col">
+                <div class="card border-0 text-white p-3 rounded-3 h-100 shadow-sm @(ViewBag.LowStockCount > 0 ? "bg-danger" : "bg-secondary")">
+                    <h5 class="card-title">Attention</h5>
+                    <h1 class="display-6 fw-bold my-2">@ViewBag.LowStockCount</h1>
+                    <small>Low stock (&lt; 5 pcs)</small>
+                </div>
             </div>
-        </div>
-
-        <div class="col">
-            <div class="card border-0 text-white p-3 rounded-3 h-100" style="background-color: #7a22cf;">
-                <h5 class="card-title">Logs Today</h5>
-                <h1 class="display-6 fw-bold my-2">@ViewBag.Logs</h1>
-                <small>Serilog entries</small>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="card border-0 text-white p-3 rounded-3 h-100 shadow-sm @(ViewBag.LowStockCount > 0 ? "bg-danger" : "bg-secondary")">
-                <h5 class="card-title">Attention</h5>
-                <h1 class="display-6 fw-bold my-2">@ViewBag.LowStockCount</h1>
-                <small>Low stock (&lt; 5 pcs)</small>
-            </div>
-        </div>
+        }
     </div>
 
     <div class="card shadow-sm p-4">
         <h4 class="fw-bold text-secondary">Quick Links</h4>
         <div class="d-flex flex-wrap gap-2 mt-3">
             <a asp-controller="Books" asp-action="Index" class="btn btn-outline-primary">Books List</a>
-            <a asp-controller="Books" asp-action="Create" class="btn btn-outline-info">Create Book</a>
-            <a asp-controller="Books" asp-action="Trash" class="btn btn-outline-danger">Trash (Deleted)</a>
-            <a asp-controller="AuditLogs" asp-action="Index" class="btn btn-outline-primary">Audit Logs</a>
-            <a href="/health/ready" class="btn btn-outline-success" target="_blank">Health Check</a>
-            <a href="/api/books/9999" class="btn btn-outline-warning" target="_blank">API DOCs</a>
+            @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
+            {
+                <a asp-controller="Books" asp-action="Create" class="btn btn-outline-info">Create Book</a>
+                <a asp-controller="Books" asp-action="Trash" class="btn btn-outline-danger">Trash (Deleted)</a>
+            }
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-controller="AuditLogs" asp-action="Index" class="btn btn-outline-primary">Audit Logs</a>
+                <a href="/health/ready" class="btn btn-outline-success" target="_blank">Health Check</a>
+                <a href="/api/books/9999" class="btn btn-outline-warning" target="_blank">API DOCs</a>
+            }
         </div>
     </div>
 </div>
+
+<ol class="flow-list">
+    <li><b>Admin:</b> All actions can do.</li>
+    <li><b>Staff:</b> AdjustStock / View detail books. View / Create sales.</li>
+    <li><b>User:</b> View list books. Create sales.</li>
+    <li><b>Anonymous:</b> Login / Register only.</li>
+</ol>

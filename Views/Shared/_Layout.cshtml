@@ -23,27 +23,22 @@
                 <a asp-controller="Books" asp-action="Create">Create</a>
                 <a asp-controller="Sales" asp-action="Index">Sales</a>
                 <a asp-controller="Books" asp-action="Trash">Trash</a>
-                <a asp-controller="AuditLogs" asp-action="Index">Audit Logs</a>
-                <div class="dropdown d-inline-block">
-                    <a class="nav-link dropdown-toggle text-white" href="#" id="healthDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">
-                        Health Checks
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="healthDropdown">
-                        <li><a class="dropdown-item text-primary" asp-controller="Health" asp-action="Live">Live Check (UI)</a></li>
-                        <li><a class="dropdown-item text-primary" asp-controller="Health" asp-action="Ready">Ready Check (UI)</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-primary" asp-controller="Health" asp-action="ReadyJson" target="_blank">Readiness Check (Raw JSON)</a></li>
-                    </ul>
-                </div>
-                <div class="dropdown d-inline-block">
-                    <a class="dropdown-toggle text-white" href="#" id="apiErrorDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">
-                        API Error Demos
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="apiErrorDropdown">
-                        <li><a class="dropdown-item text-primary" asp-controller="Books" asp-action="ApiErrorDemo" asp-route-id="9999">API Error 404 (UI View)</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-primary" asp-controller="Books" asp-action="ApiErrorJsonDemo" asp-route-id="9999" target="_blank">API Error 404 (Raw JSON)</a></li>
-                    </ul>
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-danger fw-bold" asp-controller="AuditLogs" asp-action="Index">Audit Logs</a>
+                    </li>                                
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-info fw-bold" href="#" id="healthDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Hệ thống & APIs
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="healthDropdown">
+                            <li><a class="dropdown-item" href="/health/ready" target="_blank">Health Check UI</a></li>
+                            <li><a class="dropdown-item" href="/api/books/9999" target="_blank">Test API Error (Raw JSON)</a></li>
+                        </ul>
+                    </li>
+                }
+                @await Html.PartialAsync("_LoginPartial")
                 </div>
             </nav>
         </div>
@@ -55,7 +50,7 @@
 
     <footer class="site-footer">
         <div class="container footer-content">
-            <span>&copy; 2026 - BookstoreCatalog.Mvc - Lab05</span>
+            <span>&copy; 2026 - BookstoreCatalog.Mvc - Lab06</span>
             <a href="#">Privacy</a>
         </div>
     </footer>

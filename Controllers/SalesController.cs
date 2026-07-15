@@ -1,11 +1,15 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using BookstoreCatalog.Mvc.Services;
 using BookstoreCatalog.Mvc.Repositories;
 using BookstoreCatalog.Mvc.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.Design;
 
 namespace BookstoreCatalog.Mvc.Controllers;
 
+[Authorize(Policy = "CanViewSale")]
 public class SalesController : Controller
 {
     private readonly ISaleService _saleService;
@@ -24,6 +28,7 @@ public class SalesController : Controller
     }
 
    [HttpGet]
+   [Authorize(Policy = "CanManageSale")]
     public async Task<IActionResult> Create()
     {
         var books = await _bookRepository.GetAllReadOnlyAsync();
@@ -33,6 +38,7 @@ public class SalesController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Policy = "CanManageSale")]
     public async Task<IActionResult> Create(SaleCreateViewModel model)
     {
         if (!ModelState.IsValid)

@@ -46,10 +46,14 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("CanViewProduct", p => p.RequireRole("Admin", "Staff"));
-    options.AddPolicy("CanManageProduct", p => p.RequireRole("Admin"));
+    options.AddPolicy("CanViewBook", p => p.RequireRole("Admin", "Staff"));
+    options.AddPolicy("CanManageBook", p => p.RequireRole("Admin"));
+    options.AddPolicy("CanAdjustStock", p => p.RequireRole("Admin", "Staff"));
     options.AddPolicy("CanViewAuditLog", p => p.RequireRole("Admin"));
-    options.AddPolicy("CanUploadProductImage", p => p.RequireRole("Admin"));
+    options.AddPolicy("CanUploadBookImage", p => p.RequireRole("Admin"));
+    options.AddPolicy("CanViewSale", p => p.RequireRole("Admin", "Staff", "User"));
+    options.AddPolicy("CanManageSale", p => p.RequireRole("Admin", "Staff", "User"));
+    options.AddPolicy("CanViewDataHealth", p => p.RequireRole("Admin"));
 });
 
 //==============================================================

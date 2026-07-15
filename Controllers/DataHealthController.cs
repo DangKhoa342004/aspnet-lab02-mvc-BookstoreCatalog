@@ -1,10 +1,14 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using BookstoreCatalog.Mvc.Data;
 using BookstoreCatalog.Mvc.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.Design;
 
 namespace BookstoreCatalog.Mvc.Controllers;
 
+[Authorize(Policy = "CanViewDataHealth")]
 public class DataHealthController : Controller
 {
     private readonly AppDbContext _context;
