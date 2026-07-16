@@ -35,6 +35,13 @@ Dự án tích hợp đầy đủ các tính năng của một hệ thống qu�
 
 ---
 
+## Cấu trúc thư mục (Tóm tắt)
+
+*   **GET /health/live-json:** Trả về trạng thái hoạt động hiện tại (uptime, bộ nhớ, môi trường) dưới dạng JSON.
+*   **GET /health/ready-json:** Trả về trạng thái sẵn sàng của ứng dụng và kết nối cơ sở dữ liệu dưới dạng JSON.
+
+---
+
 ## Tài khoản demo
 
 *   **Admin:** admin@bookstore.test / Admin@123

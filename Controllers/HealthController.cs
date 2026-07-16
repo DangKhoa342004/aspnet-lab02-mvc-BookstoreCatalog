@@ -79,4 +79,28 @@ public class HealthController : Controller
 
         return Json(jsonResult);
     }
+
+    [Route("health/live-json")]
+    public async Task<IActionResult> LiveJson()
+    {
+        var report = await _healthCheckService.CheckHealthAsync(check => check.Tags.Contains("live"));
+        
+        var process = Process.GetCurrentProcess();
+        var uptime = DateTime.Now - process.StartTime;
+
+        var jsonResult = new
+        {
+            status = report.Status.ToString(),
+            uptime = $"{uptime.Days}d {uptime.Hours}h {uptime.Minutes}m",
+            memoryUsage = $"{process.PrivateMemorySize64 / (1024 * 1024)} MB",
+            environment = _env.EnvironmentName,
+            checks = report.Entries.Select(e => new
+            {
+                name = e.Key,
+                status = e.Value.Status.ToString()
+            }).ToList()
+        };
+
+        return Json(jsonResult);
+    }
 }
