@@ -1366,3 +1366,14 @@ System.IO.DirectoryNotFoundException: Could not find a part of the path 'C:\User
 2026-07-16 11:36:49.489 +07:00 [INF] Đã cập nhật sách và xử lý ảnh thành công. ID=6
 2026-07-16 11:37:37.944 +07:00 [INF] Book created. BookId=7
 2026-07-16 11:43:10.801 +07:00 [INF] Application is shutting down...
+2026-07-16 11:44:49.742 +07:00 [INF] Now listening on: http://localhost:5296
+2026-07-16 11:44:49.788 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-16 11:44:49.790 +07:00 [INF] Hosting environment: Development
+2026-07-16 11:44:49.791 +07:00 [INF] Content root path: C:\Users\ASUS\OneDrive\Máy tính\API_ASPNET\Lab02_03_04\BookstoreCatalog.Mvc
+2026-07-16 11:45:31.187 +07:00 [INF] Đã cập nhật sách và xử lý ảnh thành công. ID=7
+2026-07-16 11:46:25.905 +07:00 [INF] Book created. BookId=8
+2026-07-16 11:46:40.744 +07:00 [INF] Đã cập nhật sách và xử lý ảnh thành công. ID=6
+2026-07-16 11:46:49.175 +07:00 [INF] Đã cập nhật sách và xử lý ảnh thành công. ID=7
+2026-07-16 11:48:05.894 +07:00 [INF] Book created. BookId=9
+2026-07-16 11:51:28.743 +07:00 [INF] PekoMiko đã mua sách 2 với số lượng 5
+2026-07-16 11:53:17.204 +07:00 [INF] Application is shutting down...
