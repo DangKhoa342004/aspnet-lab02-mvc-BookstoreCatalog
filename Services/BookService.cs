@@ -15,13 +15,15 @@ public class BookService : IBookService
     private readonly AppSettings _settings;
     private readonly AppDbContext _context;
     private readonly ILogger<BookService> _logger;
+    private readonly IWebHostEnvironment _webHostEnvironment;
 
-    public BookService(IBookRepository bookRepository, IOptions<AppSettings> options, AppDbContext context, ILogger<BookService> logger)
+    public BookService(IBookRepository bookRepository, IOptions<AppSettings> options, AppDbContext context, ILogger<BookService> logger, IWebHostEnvironment webHostEnvironment)
     {
         _bookRepository = bookRepository;
         _settings = options.Value;
         _context = context;
         _logger = logger;
+        _webHostEnvironment = webHostEnvironment;
     }
 
     public async Task<List<BookListViewModel>> GetBookListAsync()
@@ -36,6 +38,7 @@ public class BookService : IBookService
             Price = b.Price,
             Quantity = b.Quantity,
             GenreName = b.Genre != null ? b.Genre.Name : "N/A",
+            ImagePath = b.ImagePath,
             IsLowStock = b.Quantity < _settings.LowStockThreshold && b.Quantity > 0
         }).ToList();
     }
@@ -60,6 +63,7 @@ public class BookService : IBookService
             Quantity = book.Quantity,
             MinStock = book.MinStock,
             GenreName = book.Genre != null ? book.Genre.Name : "N/A",
+            ImagePath = book.ImagePath,
             IsLowStock = book.Quantity < _settings.LowStockThreshold && book.Quantity > 0
         };
     }
@@ -140,6 +144,22 @@ public class BookService : IBookService
             GenreId = model.GenreId ?? 0
         };
 
+        if (model.ImageFile != null && model.ImageFile.Length > 0)
+        {
+            string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", "books");
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+            string uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ImageFile.FileName;
+            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+            
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await model.ImageFile.CopyToAsync(fileStream);
+            }
+            newBook.ImagePath = "/uploads/books/" + uniqueFileName;
+        }
         await _bookRepository.AddAsync(newBook);
         await _bookRepository.SaveChangesAsync();
 
@@ -173,7 +193,7 @@ public class BookService : IBookService
             Quantity = book.Quantity,
             MinStock = book.MinStock,
             GenreId = book.GenreId,
-                
+            ImagePath = book.ImagePath,
             RowVersion = book.RowVersion != null ? Convert.ToBase64String(book.RowVersion) : ""            
         };
     }
@@ -183,7 +203,6 @@ public class BookService : IBookService
         var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == model.Id);
         if (book == null) throw new Exception("Không tìm thấy sách.");
 
-        // Manual Check
         var clientRowVersion = Convert.FromBase64String(model.RowVersion ?? "");
             
         if (book.RowVersion != null && book.RowVersion.Length > 0)
@@ -203,12 +222,38 @@ public class BookService : IBookService
         book.GenreId = model.GenreId ?? 0;
         book.UpdatedAt = DateTime.Now;
 
+        if (model.ImageFile != null && model.ImageFile.Length > 0)
+        {
+            string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", "books");
+            
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            string uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ImageFile.FileName;
+            string newFilePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+            using (var fileStream = new FileStream(newFilePath, FileMode.Create))
+            {
+                await model.ImageFile.CopyToAsync(fileStream);
+            }
+
+            if (!string.IsNullOrEmpty(book.ImagePath))
+            {
+                string oldFilePath = Path.Combine(_webHostEnvironment.WebRootPath, book.ImagePath.TrimStart('/'));   
+                if (System.IO.File.Exists(oldFilePath))
+                {
+                    System.IO.File.Delete(oldFilePath);
+                }
+            }
+            book.ImagePath = "/uploads/books/" + uniqueFileName;
+        }
+
         await _context.SaveChangesAsync();
             
-        _logger.LogInformation("Đã cập nhật sách. ID={BookId}", model.Id);
-        await _context.SaveChangesAsync();
+        _logger.LogInformation("Đã cập nhật sách và xử lý ảnh thành công. ID={BookId}", model.Id);
     }
-
     public async Task<bool> SoftDeleteAsync(int id)
     {
         var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id);

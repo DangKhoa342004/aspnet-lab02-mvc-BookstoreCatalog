@@ -9,11 +9,11 @@ public class AccountRegisterViewModel
 
     [Required(ErrorMessage = "Vui lòng nhập mật khẩu.")]
     [DataType(DataType.Password)]
-    [StringLength(100, ErrorMessage = "Mật khẩu phải từ {2} đến {1} ký tự.", MinimumLength = 6)]
+    [StringLength(100, ErrorMessage = "Mật khẩu phải trên 6 ký tự.", MinimumLength = 6)]
     public string Password { get; set; } = string.Empty;
 
     [DataType(DataType.Password)]
     [Display(Name = "Xác nhận mật khẩu")]
-    [Compare("Password", ErrorMessage = "Mật khẩu xác nhận không khớp.")]
+    [Compare("Password", ErrorMessage = "2 Mật khẩu không đồng nhất.")]
     public string ConfirmPassword { get; set; } = string.Empty;
 }

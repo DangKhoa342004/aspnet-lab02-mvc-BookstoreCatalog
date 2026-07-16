@@ -1,9 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using BookstoreCatalog.Mvc.Models;
-using System.Net;
-using System.Data;
-using System.Dynamic;
 
 namespace BookstoreCatalog.Mvc.Data;
 
@@ -82,19 +79,19 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
         modelBuilder.Entity<Book>().HasData(
             new Book { Id = 1, ISBN = "893-528-09-1926-6", Title = "Đắc Nhân Tâm", Author = "Dale Carnegie", 
                 Price = 130000, Quantity = 10, MinStock = 3, GenreId = 3, 
-                CreatedAt = new DateTime(2026,1,2), IsDeleted = false, RowVersion = Array.Empty<byte>() },
+                CreatedAt = new DateTime(2026,1,2), IsDeleted = false },
             new Book { Id = 2, ISBN = "978-604-55-9835-1", Title = "Thực sắc", Author = "Ninh Viễn", 
                 Price = 320000, Quantity = 15, MinStock = 4, GenreId = 1, 
-                CreatedAt = new DateTime(2023,5,12), IsDeleted = false, RowVersion = Array.Empty<byte>() },
+                CreatedAt = new DateTime(2023,5,12), IsDeleted = false },
             new Book { Id = 3, ISBN = "978-604-48-0995-3", Title = "Rooms Tuyển tập tranh minh họa", Author = "Senbon Umishima", 
                 Price = 200000, Quantity = 21, MinStock = 4, GenreId = 2, 
-                CreatedAt = new DateTime(2024,12,3), IsDeleted = false, RowVersion = Array.Empty<byte>() },
+                CreatedAt = new DateTime(2024,12,3), IsDeleted = false },
             new Book { Id = 4, ISBN = "978-604-38-2862-7", Title = "Rồi hoa sẽ nở - Bloom into you", Author = "Nakatani Nio", 
                 Price = 1500000, Quantity = 7, MinStock = 6, GenreId = 1, 
-                CreatedAt = new DateTime(2026,4,7), IsDeleted = false, RowVersion = Array.Empty<byte>() },
+                CreatedAt = new DateTime(2026,4,7), IsDeleted = false },
             new Book { Id = 5, ISBN = "978-604-31-9970-3", Title = "Tuổi trẻ đáng giá bao nhiêu", Author = "Tuệ Nghi", 
                 Price = 90000, Quantity = 3, GenreId = 3, MinStock = 10, 
-                CreatedAt = new DateTime(2024,2,5), IsDeleted = false, RowVersion = Array.Empty<byte>() }
+                CreatedAt = new DateTime(2024,2,5), IsDeleted = false }
         );
     }
 }

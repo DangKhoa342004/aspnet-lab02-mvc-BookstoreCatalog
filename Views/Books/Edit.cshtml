@@ -7,10 +7,12 @@
 <h2 class="text-warning mb-4 fw-bold">Edit Book</h2>
 
 <div class="card shadow-sm p-4" style="max-width: 600px;">
-    <form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+    <!-- THÊM enctype -->
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data">
         <div asp-validation-summary="ModelOnly" class="text-danger mb-3 fw-bold"></div>
         <input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="RowVersion" />
+        <input type="hidden" asp-for="ImagePath" />
 
         <div class="mb-3">
             <label class="form-label fw-bold">Tên sách</label>
@@ -28,6 +30,18 @@
             <label class="form-label fw-bold">Tác giả</label>
             <input asp-for="Author" class="form-control" />
             <span asp-validation-for="Author" class="text-danger"></span>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label fw-bold">Ảnh bìa (Bỏ trống nếu không đổi)</label>
+            @if (!string.IsNullOrEmpty(Model.ImagePath))
+            {
+                <div class="mb-2">
+                    <img src="@Model.ImagePath" alt="Current Cover" style="height: 100px; border-radius: 5px; object-fit: cover;" />
+                </div>
+            }
+            <input asp-for="ImageFile" type="file" class="form-control" accept="image/*" />
+            <span asp-validation-for="ImageFile" class="text-danger"></span>
         </div>
 
         <div class="row">

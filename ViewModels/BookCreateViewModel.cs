@@ -31,4 +31,6 @@ public class BookCreateViewModel
     [Required(ErrorMessage = "Vui lòng chọn Mã Thể loại.")]
     [Range(1, 3, ErrorMessage = "1:Romance, 2:Chill, 3:Seft-help")]
     public int? GenreId { get; set; }
+
+    public IFormFile? ImageFile { get; set; }
 }

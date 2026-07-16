@@ -17,84 +17,97 @@
 <div class="page-header">
     <div>
         <h2 class="page-title">Book Detail</h2>
-        <p class="page-description">
-            Thông tin chi tiết của sách trong kho.
-        </p>
+        <p class="page-description">Thông tin chi tiết của sách trong kho.</p>
     </div>
 
-    <a class="btn btn-light" href="/Books">
-        Quay lại danh sách
-    </a>
+    <a class="btn btn-light" href="/Books">Quay lại danh sách</a>
 </div>
 
 <div class="detail-layout">
-    <div>
-        <table class="table table-bordered">
-            <tr>
-                <th>ID</th>
-                <td>@Model.Id</td>
-            </tr>
+    <div class="row">
+        
+        <!-- Cột trái: Hiển thị bảng thông tin (Chiếm 8/12 phần) -->
+        <div class="col-md-8">
+            <table class="table table-bordered mb-0">
+                <tr>
+                    <th width="30%">ID</th>
+                    <td>@Model.Id</td>
+                </tr>
+                <tr>
+                    <th>ISBN</th>
+                    <td>@Model.ISBN</td>
+                </tr>
+                <tr>
+                    <th>Tên sách</th>
+                    <td>@Model.Title</td>
+                </tr>
+                <tr>
+                    <th>Tác giả</th>
+                    <td>@Model.Author</td>
+                </tr>
+                <tr>
+                    <th>Thể loại</th>
+                    <td>@Model.GenreName</td>
+                </tr>
+                <tr>
+                    <th>Giá bán</th>
+                    <td>@Model.PriceText</td>
+                </tr>
+                <tr>
+                    <th>Số lượng tồn kho</th>
+                    <td>@Model.Quantity</td>
+                </tr>
+                <tr>
+                    <th>Số lượng tối thiểu</th>
+                    <td>@Model.MinStock</td>
+                </tr>
+                <tr>
+                    <th>Giá trị tồn kho</th>
+                    <td>@Model.InventoryValueText</td>
+                </tr>
+            </table>
 
-            <tr></tr>
-                <th>ISBN</th>
-                <td>@Model.ISBN</td>
-            <tr>
+            <!-- Đã chuyển alert ra ngoài table để chuẩn HTML -->
+            <div class="alert alert-secondary mt-3">
+                <strong>Suggestion:</strong> @suggestion
+            </div>
 
-                <th>Tên sách</th>
-                <td>@Model.Title</td>
-            </tr>
+            <!-- Nút chức năng -->
+            <div class="d-flex gap-2 mt-4">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning fw-bold">
+                    <i class="bi bi-pencil-square"></i> Edit
+                </a>
+                
+                <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-danger fw-bold" onclick="return confirm('Bạn có chắc chắn muốn xóa sách này?');">
+                        <i class="bi bi-trash"></i> Delete
+                    </button>
+                </form>
 
-            <tr>
-                <th>Tác giả</th>
-                <td>@Model.Author</td>
-            </tr>
-
-            <tr>
-                <th>Thể loại</th>
-                <td>@Model.GenreName</td>
-            </tr>
-
-            <tr>
-                <th>Giá bán</th>
-                <td>@Model.PriceText</td>
-            </tr>
-
-            <tr>
-                <th>Số lượng tồn kho</th>
-                <td>@Model.Quantity</td>
-            </tr>
-
-            <tr>
-                <th>Số lượng tối thiểu</th>
-                <td>@Model.MinStock</td>
-            </tr>
-
-            <tr>
-                <th>Giá trị tồn kho</th>
-                <td>@Model.InventoryValueText</td>
-            </tr>
-
-            <tr>
-                <div class="alert alert-secondary mt-3">
-                    <strong>Suggestion:</strong> @suggestion
-                </div>
-            </tr>
-        </table>
-
-        <div class="d-flex gap-2 mt-4">
-            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning fw-bold">
-                <i class="bi bi-pencil-square"></i> Edit
-            </a>
-            
-            <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
-                <button type="submit" class="btn btn-danger fw-bold" onclick="return confirm('Bạn có chắc chắn muốn xóa sách này?');">
-                    <i class="bi bi-trash"></i> Delete
-                </button>
-            </form>
-
-            <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
-            
-            <a asp-action="AdjustStock" asp-route-id="@Model.Id" class="btn btn-info text-white fw-bold">Kiểm Kho</a>
+                <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+                
+                <a asp-action="AdjustStock" asp-route-id="@Model.Id" class="btn btn-info text-white fw-bold">Kiểm Kho</a>
+            </div>
         </div>
+
+        <!-- Cột phải: Hiển thị hình ảnh (Chiếm 4/12 phần) -->
+        <div class="col-md-4 text-center">
+            <div class="card shadow-sm p-3">
+                @if (!string.IsNullOrEmpty(Model.ImagePath))
+                {
+                    <img src="@Model.ImagePath" alt="Bìa sách @Model.Title" class="img-fluid rounded" style="max-height: 400px; object-fit: contain; width: 100%;" />
+                }
+                else
+                {
+                    <div class="bg-light text-muted d-flex align-items-center justify-content-center rounded" style="height: 300px; border: 2px dashed #ccc;">
+                        <div>
+                            <i class="bi bi-card-image" style="font-size: 3rem;"></i>
+                            <p class="mt-2 mb-0">Chưa có ảnh bìa</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        
     </div>
 </div>

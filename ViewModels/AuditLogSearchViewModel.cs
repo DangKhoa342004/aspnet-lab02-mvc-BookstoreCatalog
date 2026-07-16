@@ -12,7 +12,6 @@ public class AuditLogSearchViewModel
     public DateTime? StartDate { get; set; }
     public DateTime? EndDate { get; set; }
 
-        // Các số liệu cho Security Dashboard
     public int AccessDeniedToday { get; set; }
     public int SensitiveActionsToday { get; set; }
     public int RejectedUploadsToday { get; set; }

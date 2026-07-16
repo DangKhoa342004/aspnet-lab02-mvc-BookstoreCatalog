@@ -2,9 +2,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using BookstoreCatalog.Mvc.Models;
-using System.Net;
-using System.Data;
-using System.Dynamic;
 
 namespace BookstoreCatalog.Mvc.Data;
 

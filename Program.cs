@@ -46,7 +46,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("CanViewBook", p => p.RequireRole("Admin", "Staff"));
+    options.AddPolicy("CanViewBook", p => p.RequireRole("Admin", "Staff", "User"));
     options.AddPolicy("CanManageBook", p => p.RequireRole("Admin"));
     options.AddPolicy("CanAdjustStock", p => p.RequireRole("Admin", "Staff"));
     options.AddPolicy("CanViewAuditLog", p => p.RequireRole("Admin"));
@@ -100,6 +100,9 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     try
     {
+        var context = services.GetRequiredService<AppDbContext>();
+        
+        await context.Database.MigrateAsync();
         await AccountDb.SeedIdentityAsync(services);
     }
     catch (Exception ex)

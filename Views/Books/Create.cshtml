@@ -18,83 +18,66 @@
     <form class="form-box"
           asp-controller="Books"
           asp-action="Create"
-          method="post">
+          method="post"
+          enctype="multipart/form-data">
 
         @Html.AntiForgeryToken()
-
         <div asp-validation-summary="ModelOnly"></div>
 
         <div class="form-group">
             <label asp-for="Title">Tên sách</label>
-            <input asp-for="Title"
-                   class="form-control"
-                   placeholder="Ví dụ: Bocchi the Rock" />
+            <input asp-for="Title" class="form-control" placeholder="Ví dụ: Bocchi the Rock" />
             <span asp-validation-for="Title" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="ISBN">Mã ISBN</label>
-            <input asp-for="ISBN"
-                   class="form-control"
-                   placeholder="Ví dụ: 123-456-78-9012-1" />
+            <input asp-for="ISBN" class="form-control" placeholder="Ví dụ: 123-456-78-9012-1" />
             <span class="text-muted fw-normal fs-7">(Có thể trống để tự động tạo)</span>
             <span asp-validation-for="ISBN" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="Author">Tác giả</label>
-            <input asp-for="Author"
-                   class="form-control"
-                   placeholder="Ví dụ: Aki Hamazi" />
+            <input asp-for="Author" class="form-control" placeholder="Ví dụ: Aki Hamazi" />
             <span asp-validation-for="Author" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="GenreId">Mã Thể loại</label>
-            <input asp-for="GenreId"
-                   class="form-control"
-                   placeholder="Ví dụ: 1, 2, 3,..." />
+            <input asp-for="GenreId" class="form-control" placeholder="Ví dụ: 1, 2, 3,..." />
             <span asp-validation-for="GenreId" class="text-danger"></span>
+        </div>
+        
+        <div class="form-group">
+            <label asp-for="ImageFile">Ảnh bìa</label>
+            <input asp-for="ImageFile" type="file" class="form-control" accept="image/*" />
+            <span asp-validation-for="ImageFile" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="Price">Giá bán</label>
-            <input asp-for="Price"
-                   class="form-control"
-                   placeholder="Ví dụ: 450000" />
+            <input asp-for="Price" class="form-control" placeholder="Ví dụ: 450000" />
             <span asp-validation-for="Price" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="Quantity">Số lượng</label>
-            <input asp-for="Quantity"
-                   class="form-control"
-                   placeholder="Ví dụ: 12" />
+            <input asp-for="Quantity" class="form-control" placeholder="Ví dụ: 12" />
             <span asp-validation-for="Quantity" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="MinStock">Mức tồn tối thiểu</label>
-            <input asp-for="MinStock"
-                   class="form-control"
-                   placeholder="Ví dụ: 5" />
+            <input asp-for="MinStock" class="form-control" placeholder="Ví dụ: 5" />
             <span asp-validation-for="MinStock" class="text-danger"></span>
         </div>
 
-        <button class="btn" type="submit">
-            Save Book
-        </button>
-
-        <a class="btn btn-secondary"
-           asp-controller="Books"
-           asp-action="Index">
-            Back to List
-        </a>
+        <button class="btn btn-primary" type="submit">Save Book</button>
+        <a class="btn btn-secondary" asp-controller="Books" asp-action="Index">Back to List</a>
     </form>
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    <partial name="_ValidationScriptsPartial" />
 }

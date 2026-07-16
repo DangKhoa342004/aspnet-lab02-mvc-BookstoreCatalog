@@ -29,4 +29,6 @@ public class BookDetailViewModel
     public string Suggestion => Quantity <= MinStock 
         ? "Cần nhập thêm sách này để đảm bảo vận hành." 
         : "Số lượng sách đang đủ dùng.";
+    
+    public string? ImagePath { get; set; }
 }

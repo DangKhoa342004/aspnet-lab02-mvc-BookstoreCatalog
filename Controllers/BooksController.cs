@@ -28,6 +28,7 @@ public class BooksController : Controller
         return View(books);
     }
 
+    [Authorize(Policy = "CanManageBook")]
     public async Task<IActionResult> Detail(int id)
     {
         var viewModel = await _bookService.GetBookDetailAsync(id);
@@ -40,6 +41,7 @@ public class BooksController : Controller
         return View(viewModel);
     }
 
+    [Authorize(Policy = "CanManageBook")]
     public async Task<IActionResult> Stats()
     {
         var books = await _bookService.GetBookStatsAsync();

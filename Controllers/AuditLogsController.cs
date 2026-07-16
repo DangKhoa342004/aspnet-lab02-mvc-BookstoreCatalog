@@ -1,10 +1,7 @@
 using BookstoreCatalog.Mvc.ViewModels;
-using BookstoreCatalog.Mvc.Data;
+using BookstoreCatalog.Mvc.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookstoreCatalog.Mvc.Controllers;
@@ -12,17 +9,17 @@ namespace BookstoreCatalog.Mvc.Controllers;
 [Authorize(Policy = "CanViewAuditLog")]
 public class AuditLogsController : Controller
 {
-    private readonly AppDbContext _context;
+    private readonly IAuditLogService _auditLogService;
 
-    public AuditLogsController(AppDbContext context)
+    public AuditLogsController(IAuditLogService auditLogService) 
     {
-        _context = context;
+        _auditLogService = auditLogService;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(AuditLogSearchViewModel request)
     {
-        var logs = await _context.AuditLogs
-                .OrderByDescending(l => l.Time).ToListAsync();
-        return View(logs);
+        var viewModel = await _auditLogService.GetSearchAuditLogsAsync(request);
+        
+        return View(viewModel);
     }
 }

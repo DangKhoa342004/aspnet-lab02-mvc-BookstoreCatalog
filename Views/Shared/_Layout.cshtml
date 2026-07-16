@@ -15,7 +15,7 @@
                 <a asp-controller="Home" asp-action="Index">BookstoreCatalog.Mvc</a>
             </div>
 
-            <nav class="main-nav">
+            <nav class="main-nav d-flex align-items-center gap-3">
                 <a asp-controller="Home" asp-action="Index">Dashboard</a>
                 <a asp-controller="Books" asp-action="Index">Books</a>
                 <a asp-controller="Books" asp-action="Stats">Stats</a>
@@ -23,23 +23,24 @@
                 <a asp-controller="Books" asp-action="Create">Create</a>
                 <a asp-controller="Sales" asp-action="Index">Sales</a>
                 <a asp-controller="Books" asp-action="Trash">Trash</a>
+                
                 @if (User.IsInRole("Admin"))
                 {
-                    <li class="nav-item">
-                        <a class="nav-link text-danger fw-bold" asp-controller="AuditLogs" asp-action="Index">Audit Logs</a>
-                    </li>                                
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-info fw-bold" href="#" id="healthDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="text-danger fw-bold" asp-controller="AuditLogs" asp-action="Index">Audit Logs</a>
+                    
+                    <!-- Dropdown Hệ thống sử dụng Bootstrap chuẩn cho thẻ div -->
+                    <div class="dropdown">
+                        <a class="dropdown-toggle text-info fw-bold text-decoration-none" href="#" id="healthDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Hệ thống & APIs
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="healthDropdown">
-                            <li><a class="dropdown-item" href="/health/ready" target="_blank">Health Check UI</a></li>
-                            <li><a class="dropdown-item" href="/api/books/9999" target="_blank">Test API Error (Raw JSON)</a></li>
+                            <li><a class="dropdown-item text-primary" href="/health/ready" target="_blank">Health Check UI</a></li>
+                            <li><a class="dropdown-item text-primary" href="/api/books/9999" target="_blank">Test API Error (Raw JSON)</a></li>
                         </ul>
-                    </li>
+                    </div>
                 }
+                
                 @await Html.PartialAsync("_LoginPartial")
-                </div>
             </nav>
         </div>
     </header>

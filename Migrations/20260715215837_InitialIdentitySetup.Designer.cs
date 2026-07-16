@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookstoreCatalog.Mvc.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260715180526_UpdateStructure")]
-    partial class UpdateStructure
+    [Migration("20260715215837_InitialIdentitySetup")]
+    partial class InitialIdentitySetup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

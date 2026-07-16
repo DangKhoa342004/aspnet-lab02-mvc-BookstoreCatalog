@@ -34,7 +34,11 @@ public class AccountController : Controller
                 
             if (result.Succeeded)
             {
-                return LocalRedirect(returnUrl ?? "/");
+                if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+                return RedirectToAction("Index", "Home");
             }    
             ModelState.AddModelError(string.Empty, "Email hoặc mật khẩu không đúng.");
         }
