@@ -1670,3 +1670,8 @@ System.Text.Json.JsonException: A possible object cycle was detected. This can e
 2026-07-16 15:56:33.620 +07:00 [INF] Content root path: C:\Users\ASUS\OneDrive\Máy tính\API_ASPNET\Lab02_03_04\BookstoreCatalog.Mvc
 2026-07-16 15:57:02.638 +07:00 [INF] Đã cập nhật sách và xử lý ảnh thành công. ID=6
 2026-07-16 15:58:51.384 +07:00 [INF] Application is shutting down...
+2026-07-16 16:10:01.055 +07:00 [INF] Now listening on: http://localhost:5296
+2026-07-16 16:10:01.088 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-16 16:10:01.089 +07:00 [INF] Hosting environment: Development
+2026-07-16 16:10:01.090 +07:00 [INF] Content root path: C:\Users\ASUS\OneDrive\Máy tính\API_ASPNET\Lab02_03_04\BookstoreCatalog.Mvc
+2026-07-16 16:17:08.929 +07:00 [INF] Application is shutting down...

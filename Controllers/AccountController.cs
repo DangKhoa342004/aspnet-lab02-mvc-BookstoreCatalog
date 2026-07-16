@@ -3,17 +3,20 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using BookstoreCatalog.Mvc.ViewModels;
 using BookstoreCatalog.Mvc.Models;
+using BookstoreCatalog.Mvc.Services;
 
 namespace BookstoreCatalog.Mvc.Controllers;
 public class AccountController : Controller
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
+    private readonly IAuditLogService _auditLogService;
 
-    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IAuditLogService auditLogService)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _auditLogService = auditLogService;
     }
 
     [HttpGet]
@@ -54,8 +57,16 @@ public class AccountController : Controller
     }
         
     [HttpGet]
-    public IActionResult AccessDenied()
+    public async Task<IActionResult> AccessDenied()
     {
+        await _auditLogService.LogAsync(
+            "AccessDenied", 
+            "System", 
+            null, 
+            "Failed", 
+            "Người dùng cố gắng truy cập tài nguyên không có quyền."
+        );
+
         return View();
     }
 
