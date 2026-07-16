@@ -35,6 +35,15 @@ Dự án tích hợp đầy đủ các tính năng của một hệ thống qu�
 
 ---
 
+## Tài khoản demo
+
+*   **Admin:** admin@bookstore.test / Admin@123
+*   **Staff:** staff@bookstore.test / Staff@123
+*   **User:** user@bookstore.test / User@123
+
+
+---
+
 ## Hướng dẫn cài đặt và chạy sản phẩm
 
 **Bước 1: Clone dự án về máy**
