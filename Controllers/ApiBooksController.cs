@@ -49,7 +49,8 @@ public class ApiBooksController : ControllerBase
         }
 
         var results = await _context.Books.AsNoTracking()
-            .Where(b => b.Title.Contains(keyword) || b.ISBN.Contains(keyword))
+            .Where(b => b.Title.Contains(keyword) || b.ISBN.Contains(keyword) || 
+                    b.Author.Contains(keyword) || b.Genre.Name.Contains(keyword))
             .Select(b => new 
             {
                 b.Id,
