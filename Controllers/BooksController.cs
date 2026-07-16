@@ -28,7 +28,7 @@ public class BooksController : Controller
         return View(books);
     }
 
-    [Authorize(Policy = "CanManageBook")]
+    [Authorize(Policy = "CanAdjustStock")]
     public async Task<IActionResult> Detail(int id)
     {
         var viewModel = await _bookService.GetBookDetailAsync(id);

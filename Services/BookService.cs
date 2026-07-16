@@ -16,14 +16,17 @@ public class BookService : IBookService
     private readonly AppDbContext _context;
     private readonly ILogger<BookService> _logger;
     private readonly IWebHostEnvironment _webHostEnvironment;
+    private readonly IFileUploadService _fileUploadService;
 
-    public BookService(IBookRepository bookRepository, IOptions<AppSettings> options, AppDbContext context, ILogger<BookService> logger, IWebHostEnvironment webHostEnvironment)
+    public BookService(IBookRepository bookRepository, IOptions<AppSettings> options, AppDbContext context, 
+            ILogger<BookService> logger, IWebHostEnvironment webHostEnvironment, IFileUploadService fileUploadService)
     {
         _bookRepository = bookRepository;
         _settings = options.Value;
         _context = context;
         _logger = logger;
         _webHostEnvironment = webHostEnvironment;
+        _fileUploadService = fileUploadService;
     }
 
     public async Task<List<BookListViewModel>> GetBookListAsync()
@@ -146,19 +149,7 @@ public class BookService : IBookService
 
         if (model.ImageFile != null && model.ImageFile.Length > 0)
         {
-            string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", "books");
-            if (!Directory.Exists(uploadsFolder))
-            {
-                Directory.CreateDirectory(uploadsFolder);
-            }
-            string uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ImageFile.FileName;
-            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-            
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
-            {
-                await model.ImageFile.CopyToAsync(fileStream);
-            }
-            newBook.ImagePath = "/uploads/books/" + uniqueFileName;
+            newBook.ImagePath = await _fileUploadService.SaveBookImageAsync(model.ImageFile);
         }
         await _bookRepository.AddAsync(newBook);
         await _bookRepository.SaveChangesAsync();
@@ -224,21 +215,7 @@ public class BookService : IBookService
 
         if (model.ImageFile != null && model.ImageFile.Length > 0)
         {
-            string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", "books");
-            
-            if (!Directory.Exists(uploadsFolder))
-            {
-                Directory.CreateDirectory(uploadsFolder);
-            }
-
-            string uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ImageFile.FileName;
-            string newFilePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-            using (var fileStream = new FileStream(newFilePath, FileMode.Create))
-            {
-                await model.ImageFile.CopyToAsync(fileStream);
-            }
-
+            string newImagePath = await _fileUploadService.SaveBookImageAsync(model.ImageFile);
             if (!string.IsNullOrEmpty(book.ImagePath))
             {
                 string oldFilePath = Path.Combine(_webHostEnvironment.WebRootPath, book.ImagePath.TrimStart('/'));   
@@ -247,7 +224,8 @@ public class BookService : IBookService
                     System.IO.File.Delete(oldFilePath);
                 }
             }
-            book.ImagePath = "/uploads/books/" + uniqueFileName;
+
+            book.ImagePath = newImagePath;
         }
 
         await _context.SaveChangesAsync();
