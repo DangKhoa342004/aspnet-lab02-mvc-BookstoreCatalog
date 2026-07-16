@@ -96,6 +96,6 @@ public class AuditLogService : IAuditLogService
         request.RejectedUploadsToday = await _context.AuditLogs.AsNoTracking()
             .CountAsync(l => l.Result == "Failed" && l.Action == "UploadImage" && l.Time >= today && l.Time < tomorrow);
 
-        return request;
+        return request; 
     }
 }

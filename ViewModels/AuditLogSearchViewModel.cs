@@ -17,5 +17,5 @@ public class AuditLogSearchViewModel
     public int RejectedUploadsToday { get; set; }
 
     public List<SelectListItem> ActionOptions { get; set; } = new List<SelectListItem>();
-    public List<AuditLog> Logs { get; set; } = new List<AuditLog>();
+    public List<AuditLog> Logs { get; set; } = new List<AuditLog>(); 
 }

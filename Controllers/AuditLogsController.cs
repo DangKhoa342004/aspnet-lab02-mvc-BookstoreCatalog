@@ -21,5 +21,5 @@ public class AuditLogsController : Controller
         var viewModel = await _auditLogService.GetSearchAuditLogsAsync(request);
         
         return View(viewModel);
-    }
+    } 
 }
